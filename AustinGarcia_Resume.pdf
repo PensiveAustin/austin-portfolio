@@ -1,0 +1,445 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<<
+/Producer (pypdf)
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Count 1
+/Kids [ 4 0 R ]
+>>
+endobj
+3 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+4 0 obj
+<<
+/Contents 5 0 R
+/MediaBox [ 0 0 595.2756 841.8898 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 7 0 R
+/F2 8 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 2 0 R
+>>
+endobj
+5 0 obj
+<<
+/Length 7460
+>>
+stream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+.078431 .337255 .627451 rg
+n 0 837.8898 595.2756 4 re f*
+.85098 .890196 .937255 RG
+.5 w
+n 45.35433 28.34646 m 549.9213 28.34646 l S
+BT /F1 7 Tf 8.4 TL ET
+.294118 .333333 .388235 rg
+BT 1 0 0 1 45.35433 18.4252 Tm (Austin Garcia) Tj T* ET
+BT 1 0 0 1 501.9503 18.4252 Tm (Resume \177 2026) Tj T* ET
+Q
+q
+1 0 0 1 51.35433 772.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 3 Tm /F2 24 Tf 27 TL (AUSTIN GARCIA) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 757.0394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2.5 Tm /F2 10.5 Tf 13 TL (FULL-STACK WEB DEVELOPER) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 743.0394 cm
+q
+.294118 .333333 .388235 rg
+BT 1 0 0 1 0 1.8 Tm /F1 8.2 Tf 10 TL (Philippines | github.com/PensiveAustin | linkedin.com/in/austin-garcia-web/ | fiverr.com/s/qD2LAp2) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 738.0394 cm
+Q
+q
+1 0 0 1 51.35433 718.0394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2.5 Tm /F2 10.5 Tf 13 TL (PROFILE) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 679.5394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 26 Tm /F1 8.5 Tf 11.5 TL (Full-stack web developer focused on building responsive, production-ready websites and practical web systems. Experienced with) Tj T* (front-end development, deployment, databases, authentication, AI-assisted features, and cloud-backed workflows. Currently) Tj T* (pursuing BS Information Technology while building real-world projects and client-ready solutions.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 659.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2.5 Tm /F2 10.5 Tf 13 TL (TECHNICAL SKILLS) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 589.5394 cm
+q
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 52.5 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F2 8.1 Tf 10.5 TL (Web Development) Tj T* ET
+Q
+Q
+q
+1 0 0 1 119.3858 52.5 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F1 8.1 Tf 10.5 TL (HTML, CSS, JavaScript, responsive web design) Tj T* ET
+Q
+Q
+q
+1 0 0 1 6 36 cm
+q
+BT 1 0 0 1 0 2.4 Tm 10.5 TL /F2 8.1 Tf .066667 .094118 .152941 rg (Backend & Database) Tj T* ET
+Q
+Q
+q
+1 0 0 1 119.3858 36 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F1 8.1 Tf 10.5 TL (Supabase, MySQL, authentication, CRUD/database systems) Tj T* ET
+Q
+Q
+q
+1 0 0 1 6 19.5 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F2 8.1 Tf 10.5 TL (Deployment) Tj T* ET
+Q
+Q
+q
+1 0 0 1 119.3858 19.5 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F1 8.1 Tf 10.5 TL (GitHub, Cloudflare, hosting, domain setup) Tj T* ET
+Q
+Q
+q
+1 0 0 1 6 3 cm
+q
+BT 1 0 0 1 0 2.4 Tm 10.5 TL /F2 8.1 Tf .066667 .094118 .152941 rg (Software & Tools) Tj T* ET
+Q
+Q
+q
+1 0 0 1 119.3858 3 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F1 8.1 Tf 10.5 TL (VS Code, Microsoft Office, Google Workspace, Zoom, CapCut) Tj T* ET
+Q
+Q
+q
+1 J
+1 j
+.85098 .890196 .937255 RG
+.35 w
+n 0 49.5 m 496.063 49.5 l S
+n 0 33 m 496.063 33 l S
+n 0 16.5 m 496.063 16.5 l S
+n 0 0 m 496.063 0 l S
+Q
+Q
+Q
+q
+1 0 0 1 51.35433 569.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2.5 Tm /F2 10.5 Tf 13 TL (EXPERIENCE) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 555.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2 Tm /F2 8 Tf 10 TL (2026) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 544.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F2 9.1 Tf 11.5 TL (Lead Developer \227 Grammar Wizard) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 520.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 14.5 Tm /F1 8.5 Tf 11.5 TL (Leading development of a learning platform for Porais National High School students, integrating a user database,) Tj T* (login/authentication, AI-assisted features, and interactive quizzes.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 516.0394 cm
+Q
+q
+1 0 0 1 51.35433 506.0394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2 Tm /F2 8 Tf 10 TL (2026) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 494.5394 cm
+q
+BT 1 0 0 1 0 2.4 Tm 11.5 TL /F2 9.1 Tf .066667 .094118 .152941 rg (Web Development & Freelance Projects) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 470.5394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 14.5 Tm /F1 8.5 Tf 11.5 TL (Building professional business websites with responsive layouts, database integration, custom features, hosting, domain) Tj T* (configuration, and Cloudflare-backed deployment.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 466.5394 cm
+Q
+q
+1 0 0 1 51.35433 446.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2.5 Tm /F2 10.5 Tf 13 TL (EDUCATION) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 432.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2 Tm /F2 8 Tf 10 TL (2026\226Present) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 421.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F2 9.1 Tf 11.5 TL (Central Luzon State University \(CLSU\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 408.5394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 3 Tm /F1 8.5 Tf 11.5 TL (Bachelor of Science in Information Technology) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 404.5394 cm
+Q
+q
+1 0 0 1 51.35433 394.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2 Tm /F2 8 Tf 10 TL (2024\2262026) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 383.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F2 9.1 Tf 11.5 TL (STI College San Jose) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 370.5394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 3 Tm /F1 8.5 Tf 11.5 TL (TVL \227 Mobile App and Web Development) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 366.5394 cm
+Q
+q
+1 0 0 1 51.35433 356.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2 Tm /F2 8 Tf 10 TL (2019\2262024) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 345.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F2 9.1 Tf 11.5 TL (Porais National High School) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 332.5394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 3 Tm /F1 8.5 Tf 11.5 TL (Junior High School) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 328.5394 cm
+Q
+q
+1 0 0 1 51.35433 308.5394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2.5 Tm /F2 10.5 Tf 13 TL (SELECTED PROJECT) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 293.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 2.4 Tm /F2 9.1 Tf 11.5 TL (Grammar Wizard) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 269.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 0 14.5 Tm /F1 8.5 Tf 11.5 TL (A student-focused learning platform featuring user accounts, database-backed content, AI-assisted functionality, and interactive) Tj T* (grammar quizzes.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 249.0394 cm
+q
+.078431 .337255 .627451 rg
+BT 1 0 0 1 0 2.5 Tm /F2 10.5 Tf 13 TL (CORE STRENGTHS) Tj T* ET
+Q
+Q
+q
+1 0 0 1 51.35433 234.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 9 2.7 Tm /F1 8.3 Tf 11 TL -6 0 Td (\177 Full-stack website development from interface to deployment) Tj T* 6 0 Td ET
+Q
+Q
+q
+1 0 0 1 51.35433 222.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 9 2.7 Tm /F1 8.3 Tf 11 TL -6 0 Td (\177 Database-driven features and authentication) Tj T* 6 0 Td ET
+Q
+Q
+q
+1 0 0 1 51.35433 210.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 9 2.7 Tm /F1 8.3 Tf 11 TL -6 0 Td (\177 Responsive and user-focused interface development) Tj T* 6 0 Td ET
+Q
+Q
+q
+1 0 0 1 51.35433 198.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 9 2.7 Tm /F1 8.3 Tf 11 TL -6 0 Td (\177 Independent project development and problem solving) Tj T* 6 0 Td ET
+Q
+Q
+q
+1 0 0 1 51.35433 186.0394 cm
+q
+.066667 .094118 .152941 rg
+BT 1 0 0 1 9 2.7 Tm /F1 8.3 Tf 11 TL -6 0 Td (\177 Clear communication and practical client-oriented solutions) Tj T* 6 0 Td ET
+Q
+Q
+ 
+
+Q
+
+q
+0.0 0.0 595.2756 841.8898 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+BT
+/F1-0 8.2 Tf
+9.84 TL
+ET
+0.35 0.35 0.35 rg
+BT
+1 0 0 1 410 744.6898 Tm
+(\174  work\056austingarcia\100gmail\056com) Tj
+T*
+ET
+Q
+
+
+endstream
+endobj
+6 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+7 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+8 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000015 00000 n 
+0000000054 00000 n 
+0000000113 00000 n 
+0000000162 00000 n 
+0000000405 00000 n 
+0000007917 00000 n 
+0000008024 00000 n 
+0000008131 00000 n 
+trailer
+<<
+/Size 9
+/Root 3 0 R
+/Info 1 0 R
+>>
+startxref
+8243
+%%EOF
