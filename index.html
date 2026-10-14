@@ -609,7 +609,7 @@
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18L18 6M18 6H9M18 6V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="#samples" class="btn btn-ghost">View Samples</a>
-          <a href="AustinGarcia_Resume.pdf" download="AustinGarciaResume.pdf" class="btn btn-ghost">
+          <a href="AustinGarciaResume.pdf" download="AustinGarciaResume.pdf" class="btn btn-ghost">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Resume
           </a>
@@ -754,20 +754,6 @@
         <div class="sample-media"><img src="markan2.png" alt="Markan screenshot 2"></div>
         <div class="sample-meta">
           <h3>Main Features</h3>
-          <p>Describe what this screen shows.</p>
-        </div>
-      </div>
-      <div class="sample-card">
-        <div class="sample-media"><img src="markan3.png" alt="Markan screenshot 3"></div>
-        <div class="sample-meta">
-          <h3>Dashboard</h3>
-          <p>Describe what this screen shows.</p>
-        </div>
-      </div>
-      <div class="sample-card">
-        <div class="sample-media"><img src="markan4.png" alt="Markan screenshot 4"></div>
-        <div class="sample-meta">
-          <h3>Mobile View</h3>
           <p>Describe what this screen shows.</p>
         </div>
       </div>
@@ -937,7 +923,7 @@
 
   function tick(){
     var remaining = 100 - progress;
-    var step = Math.max(0.6, remaining * 0.09) * (0.6 + Math.random()*0.8);
+    var step = Math.max(2, remaining * 0.22) * (0.7 + Math.random()*0.6);
     progress = Math.min(100, progress + step);
 
     var litCount = Math.round((progress/100) * SEGMENTS);
@@ -953,11 +939,11 @@
     if(fIdx !== flavorIdx){ flavorIdx = fIdx; flavorEl.textContent = flavors[fIdx]; }
 
     if(progress < 100){
-      setTimeout(tick, 90 + Math.random()*90);
+      setTimeout(tick, 35 + Math.random()*35);
     } else {
       labelEl.textContent = 'READY';
       flavorEl.textContent = 'LAUNCHING';
-      setTimeout(triggerShake, 260);
+      setTimeout(triggerShake, 120);
     }
   }
 
@@ -974,8 +960,8 @@
         navEl.classList.add('show');
         initScrollFeatures();
         setTimeout(typeGreeting, 400);
-      }, 350);
-    }, 500);
+      }, 200);
+    }, 300);
   }
 
   function typeGreeting(){
@@ -997,7 +983,7 @@
     step();
   }
 
-  setTimeout(tick, 400);
+  setTimeout(tick, 150);
 
   /* ---------- CONTACT FORM (Web3Forms, no redirect) ---------- */
   var inquiryForm = document.getElementById('inquiryForm');
