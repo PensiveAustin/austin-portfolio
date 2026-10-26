@@ -158,7 +158,7 @@ body::after{content:"";position:fixed;inset:0;z-index:150;pointer-events:none;op
 .led::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--c);opacity:0}
 [data-status="available"] .led::after{animation:ledPing 2.2s ease-out infinite}
 @keyframes ledPing{0%{transform:scale(.55);opacity:.75}100%{transform:scale(1.9);opacity:0}}
-.status-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:26px}
+.status-row{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:26px}
 .status-row .pill{margin-bottom:0}
 .status-chip{display:inline-flex;align-items:center;gap:10px;padding:7px 13px 6px 11px;background:#FBF8F4;border:2px solid var(--ink);border-radius:6px;box-shadow:3px 3px 0 var(--ink);font-family:var(--pixel);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);transition:opacity .5s ease}
 .avatar{position:relative;display:inline-flex;flex:none}
@@ -169,6 +169,38 @@ body::after{content:"";position:fixed;inset:0;z-index:150;pointer-events:none;op
 .status-box span:not(.led){display:block;margin-top:4px;color:#CFCAC5;font-size:16px;line-height:1.5}
 html:not([data-status]) .status-chip,html:not([data-status]) .led-sm{opacity:0}
 html:not([data-status]) .status-box{display:none}
+
+/* status sprite + message popup (driven by status.js via data-status) */
+.status-row{z-index:6}
+.bt-wrap{display:inline-flex;align-items:center}
+.bt-btn{position:relative;display:block;width:48px;height:46px;margin:-4px 0;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bt-btn:focus-visible{outline:2px dashed var(--ink);outline-offset:4px;border-radius:6px}
+.bt{position:absolute;left:50%;bottom:0;margin-left:-36px;overflow:visible;shape-rendering:crispEdges;pointer-events:none}
+[data-status="busy"] .bt-av,[data-status="available"] .bt-bz{display:none}
+html:not([data-status]) .bt-wrap{display:none}
+.bt-bubble{position:absolute;left:0;top:calc(100% + 4px);z-index:40;width:max-content;max-width:min(320px,calc(100vw - 24px));padding:12px 36px 12px 14px;background:#FBF8F4;border:2px solid var(--ink);border-radius:8px;box-shadow:4px 4px 0 var(--ink);color:var(--ink);opacity:0;transform:translateY(-6px) scale(.92);transform-origin:var(--tx,24px) -8px;transition:opacity .2s steps(4),transform .2s steps(4)}
+.bt-bubble.is-open{opacity:1;transform:none}
+.bt-bubble::before{content:"";position:absolute;top:-8px;left:calc(var(--tx,24px) - 7px);width:12px;height:12px;background:#FBF8F4;border-top:2px solid var(--ink);border-left:2px solid var(--ink);transform:rotate(45deg)}
+.bt-bubble.bt-side{transform-origin:-8px var(--ty,20px);transform:translateX(-8px) scale(.92)}
+.bt-bubble.bt-side.is-open{transform:none}
+.bt-bubble.bt-side::before{top:calc(var(--ty,20px) - 7px);left:-8px;border-top:0;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.bt-h{display:flex;align-items:center;gap:9px}
+.bt-h b{font-family:var(--pixel);font-weight:400;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.bt-bubble p{margin:6px 0 0;font-size:15px;line-height:1.45;color:var(--text)}
+.bt-x{position:absolute;top:6px;right:6px;width:26px;height:26px;border:0;border-radius:4px;background:none;color:var(--ink);font:400 20px/1 var(--pixel);cursor:pointer}
+.bt-x:hover{background:rgba(30,26,28,.08)}
+.bt-x:focus-visible{outline:2px dashed var(--ink)}
+.bta-eC,.bta-eH,.bta-hl,.bta-hr,.bta-s1,.bta-s2,.bta-s3,.bta-s4{opacity:0}
+.bta-all{animation:kbta_all 4s steps(1) infinite}.bta-cap{animation:kbta_cap 4s steps(1) infinite}.bta-face{animation:kbta_face 4s steps(1) infinite}.bta-eN{animation:kbta_eN 4s steps(1) infinite}.bta-eC{animation:kbta_eC 4s steps(1) infinite}.bta-eH{animation:kbta_eH 4s steps(1) infinite}.bta-hl{animation:kbta_hl 4s steps(1) infinite}.bta-hr{animation:kbta_hr 4s steps(1) infinite}.bta-s1{animation:kbta_s1 4s steps(1) infinite}.bta-s2{animation:kbta_s2 4s steps(1) infinite}.bta-s3{animation:kbta_s3 4s steps(1) infinite}.bta-s4{animation:kbta_s4 4s steps(1) infinite}@keyframes kbta_all{0%{transform:translateY(0px)}10%{transform:translateY(-1px)}20%{transform:translateY(0px)}48%{transform:translateY(-2px)}52%{transform:translateY(-4px)}58%{transform:translateY(-2px)}62%{transform:translateY(0px)}72%{transform:translateY(-1px)}76%{transform:translateY(0px)}80%{transform:translateY(-1px)}84%{transform:translateY(0px)}}@keyframes kbta_cap{0%{transform:translateY(0px)}44%{transform:translateY(1px)}48%{transform:translateY(-1px)}52%{transform:translateY(0px)}62%{transform:translateY(1px)}64%{transform:translateY(0px)}}@keyframes kbta_face{0%{transform:translateY(0px)}44%{transform:translateY(1px)}48%{transform:translateY(0px)}62%{transform:translateY(1px)}64%{transform:translateY(0px)}}@keyframes kbta_eN{0%{opacity:1;transform:translateX(0px)}20%{opacity:1;transform:translateX(1px)}28%{opacity:1;transform:translateX(-1px)}36%{opacity:1;transform:translateX(0px)}38%{opacity:0;transform:translateX(0px)}44%{opacity:1;transform:translateX(0px)}48%{opacity:0;transform:translateX(0px)}88%{opacity:1;transform:translateX(0px)}94%{opacity:0;transform:translateX(0px)}96%{opacity:1;transform:translateX(0px)}}@keyframes kbta_eC{0%{opacity:0}38%{opacity:1}44%{opacity:0}94%{opacity:1}96%{opacity:0}}@keyframes kbta_eH{0%{opacity:0}48%{opacity:1}88%{opacity:0}}@keyframes kbta_hl{0%{opacity:0;transform:translateY(0px)}48%{opacity:1;transform:translateY(-1px)}52%{opacity:1;transform:translateY(-4px)}58%{opacity:1;transform:translateY(-2px)}62%{opacity:1;transform:translateY(1px)}64%{opacity:0;transform:translateY(0px)}}@keyframes kbta_hr{0%{opacity:0;transform:translateY(0px)}48%{opacity:1;transform:translateY(-1px)}52%{opacity:1;transform:translateY(-4px)}58%{opacity:1;transform:translateY(-2px)}62%{opacity:1;transform:translateY(1px)}64%{opacity:1;transform:translateY(-4px)}68%{opacity:1;transform:translateY(-2px)}72%{opacity:1;transform:translateY(-4px)}76%{opacity:1;transform:translateY(-2px)}80%{opacity:1;transform:translateY(-4px)}84%{opacity:1;transform:translateY(-2px)}88%{opacity:0;transform:translateY(0px)}}@keyframes kbta_s1{0%{opacity:0}12%{opacity:1}16%{opacity:0}52%{opacity:1}58%{opacity:0}68%{opacity:1}70%{opacity:0}76%{opacity:1}78%{opacity:0}84%{opacity:1}86%{opacity:0}}@keyframes kbta_s2{0%{opacity:0}52%{opacity:1}58%{opacity:0}70%{opacity:1}72%{opacity:0}78%{opacity:1}80%{opacity:0}86%{opacity:1}88%{opacity:0}}@keyframes kbta_s3{0%{opacity:0}52%{opacity:1}54%{opacity:0}56%{opacity:1}60%{opacity:0}62%{opacity:1}64%{opacity:0}}@keyframes kbta_s4{0%{opacity:0}54%{opacity:1}56%{opacity:0}60%{opacity:1}62%{opacity:0}}
+.btb-bob{animation:btbBob .5s steps(1) infinite}@keyframes btbBob{50%{transform:translateY(-1px)}}
+.btb-eyes{transform-box:fill-box;transform-origin:center;animation:btbBlink 2.2s steps(1) infinite}
+@keyframes btbBlink{0%,88%,100%{transform:scaleY(1)}90%,97%{transform:scaleY(.12)}93%{transform:scaleY(.5)}}
+.btb-hl,.btb-hr{animation:btbTap .26s steps(1) infinite}.btb-hr{animation-delay:-.13s}
+@keyframes btbTap{50%{transform:translateY(1px)}}
+.btb-d{opacity:0;animation:btbDots 1.2s steps(1) infinite}.btb-d1{animation-delay:.2s}.btb-d2{animation-delay:.4s}
+@keyframes btbDots{0%{opacity:0}20%,70%{opacity:1}80%,100%{opacity:0}}
+.lite .bt *{animation:none!important}.lite .btb-d{opacity:1}
+@media (prefers-reduced-motion:reduce){.bt *{animation:none!important}.btb-d{opacity:1}.bt-bubble{transition:none}}
 
 /* stats */
 .stats{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg)}
@@ -490,6 +522,17 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
         <div class="status-row">
           <div class="pill"><i></i>Full-Stack Web Developer</div>
           <div class="status-chip" role="status"><span class="led" aria-hidden="true"></span><span data-status-label>Available for projects</span></div>
+          <div class="bt-wrap" id="btWrap">
+            <button class="bt-btn" id="btBtn" type="button" aria-expanded="false" aria-controls="btBubble" aria-label="Show my availability message">
+              <svg class="bt bt-av" viewBox="-7 -8 38 31" width="76" height="62" aria-hidden="true" focusable="false"><g class="bta-all"><g class="bta-hl"><rect x="-2" y="14" width="2" height="3" fill="#5aa8f5"/></g><g class="bta-hr"><rect x="22" y="14" width="2" height="3" fill="#5aa8f5"/></g><g class="bta-cap"><rect x="5" y="0" width="12" height="5" fill="#0f1426"/></g><rect x="1" y="4" width="20" height="1" fill="#0f1426"/><rect x="0" y="5" width="22" height="17" fill="#0f1426"/><rect x="1" y="22" width="20" height="1" fill="#0f1426"/><g class="bta-face"><rect x="6" y="8" width="4" height="1" fill="#4a8fe0"/><rect x="13" y="8" width="4" height="1" fill="#4a8fe0"/><rect x="5" y="9" width="6" height="1" fill="#4a8fe0"/><rect x="12" y="9" width="6" height="1" fill="#4a8fe0"/><rect x="4" y="10" width="14" height="1" fill="#4a8fe0"/><rect x="3" y="11" width="16" height="4" fill="#4a8fe0"/><rect x="4" y="15" width="14" height="1" fill="#4a8fe0"/><rect x="5" y="16" width="12" height="1" fill="#3b78c9"/><rect x="7" y="17" width="8" height="1" fill="#3b78c9"/><rect x="6" y="8" width="4" height="1" fill="#6aa6f0"/><rect x="13" y="8" width="4" height="1" fill="#6aa6f0"/><g class="bta-eN"><rect x="7" y="11" width="2" height="3" fill="#fff"/><rect x="13" y="11" width="2" height="3" fill="#fff"/></g><g class="bta-eC"><rect x="7" y="12" width="2" height="1" fill="#fff"/><rect x="13" y="12" width="2" height="1" fill="#fff"/></g><g class="bta-eH"><rect x="7" y="11" width="2" height="1" fill="#fff"/><rect x="6" y="12" width="1" height="1" fill="#fff"/><rect x="9" y="12" width="1" height="1" fill="#fff"/><rect x="6" y="13" width="1" height="1" fill="#fff"/><rect x="9" y="13" width="1" height="1" fill="#fff"/><rect x="13" y="11" width="2" height="1" fill="#fff"/><rect x="12" y="12" width="1" height="1" fill="#fff"/><rect x="15" y="12" width="1" height="1" fill="#fff"/><rect x="12" y="13" width="1" height="1" fill="#fff"/><rect x="15" y="13" width="1" height="1" fill="#fff"/></g></g></g><g class="bta-s1" fill="#4a8fe0"><rect x="22" y="-1" width="2" height="1"/><rect x="23" y="1" width="2" height="1"/><rect x="25" y="0" width="1" height="1"/></g><g class="bta-s2" fill="#4a8fe0"><rect x="-1" y="-1" width="2" height="1"/><rect x="-2" y="1" width="2" height="1"/><rect x="0" y="2" width="1" height="1"/></g><g class="bta-s3"><rect x="-6" y="6" width="3" height="1" fill="#4a8fe0"/><rect x="-5" y="5" width="1" height="3" fill="#4a8fe0"/><rect x="25" y="10" width="3" height="1" fill="#4a8fe0"/><rect x="26" y="9" width="1" height="3" fill="#4a8fe0"/></g><g class="bta-s4"><rect x="-5" y="12" width="3" height="1" fill="#4a8fe0"/><rect x="-4" y="11" width="1" height="3" fill="#4a8fe0"/><rect x="26" y="4" width="3" height="1" fill="#4a8fe0"/><rect x="27" y="3" width="1" height="3" fill="#4a8fe0"/></g></svg>
+              <svg class="bt bt-bz" viewBox="-7 -8 38 31" width="76" height="62" aria-hidden="true" focusable="false"><g class="btb-bob"><rect x="5" y="0" width="12" height="5" fill="#0f1426"/><rect x="1" y="4" width="20" height="1" fill="#0f1426"/><rect x="0" y="5" width="22" height="17" fill="#0f1426"/><rect x="1" y="22" width="20" height="1" fill="#0f1426"/><rect x="6" y="8" width="4" height="1" fill="#4a8fe0"/><rect x="13" y="8" width="4" height="1" fill="#4a8fe0"/><rect x="5" y="9" width="6" height="1" fill="#4a8fe0"/><rect x="12" y="9" width="6" height="1" fill="#4a8fe0"/><rect x="4" y="10" width="14" height="1" fill="#4a8fe0"/><rect x="3" y="11" width="16" height="4" fill="#4a8fe0"/><rect x="4" y="15" width="14" height="1" fill="#4a8fe0"/><rect x="5" y="16" width="12" height="1" fill="#3b78c9"/><rect x="7" y="17" width="8" height="1" fill="#3b78c9"/><rect x="6" y="8" width="4" height="1" fill="#6aa6f0"/><rect x="13" y="8" width="4" height="1" fill="#6aa6f0"/><g class="btb-eyes"><rect x="7" y="11" width="2" height="3" fill="#fff"/><rect x="13" y="11" width="2" height="3" fill="#fff"/></g><rect x="5" y="15" width="12" height="6" fill="#2c3a56"/><rect x="5" y="15" width="12" height="1" fill="#3a4a6c"/><rect x="4" y="21" width="14" height="1" fill="#1b2640"/><rect x="9" y="18" width="4" height="1" fill="#9fb0c8"/><rect x="10" y="17" width="2" height="3" fill="#9fb0c8"/><g class="btb-hl"><rect x="3" y="18" width="2" height="2" fill="#5aa8f5"/></g><g class="btb-hr"><rect x="17" y="18" width="2" height="2" fill="#5aa8f5"/></g></g><rect class="btb-d btb-d0" x="23" y="11" width="2" height="1" fill="#4a8fe0"/><rect class="btb-d btb-d1" x="24" y="13" width="2" height="1" fill="#4a8fe0"/><rect class="btb-d btb-d2" x="23" y="15" width="2" height="1" fill="#4a8fe0"/></svg>
+            </button>
+            <div class="bt-bubble" id="btBubble" role="status" hidden>
+              <button class="bt-x" id="btX" type="button" aria-label="Close message">&times;</button>
+              <div class="bt-h"><span class="led" aria-hidden="true"></span><b data-status-label></b></div>
+              <p data-status-msg></p>
+            </div>
+          </div>
         </div>
         <h1 class="hero-title" data-split>Websites built to actually perform.</h1>
         <p class="hero-sub">
@@ -816,6 +859,7 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 
 <script src="config.js"></script>
 <script src="status.js"></script>
+<script src="status-bot.js"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/lenis.min.js"></script>

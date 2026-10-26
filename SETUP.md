@@ -38,6 +38,7 @@ Bookmark the page — it isn't linked from your site and search engines are told
 - A glowing light on your logo in the nav (green pulses, red stays steady)
 - A status chip under the banner: "Available for projects" / "Currently busy"
 - A box above the contact form with your message
+- Your pixel bot next to the status chip in the hero: it pops up a speech bubble with your message about 1.5 s after the page loads (once per visit for each message), closes itself after 9 s, and reopens when clicked. Busy shows the bot typing on a laptop; available shows the waving, jumping bot.
 
 If Supabase is ever unreachable, the site shows the last status the visitor saw, or hides the
 light — it never shows a wrong status or breaks the page.
@@ -46,4 +47,5 @@ light — it never shows a wrong status or breaks the page.
 - `admin.html` — your private control page
 - `config.js` — your two Supabase values
 - `status.js` — reads the status for the public site
+- `status-bot.js` — the pop-up bubble behaviour (the bot art and styles live in `index.html`)
 - `supabase-setup.sql` — run once in Supabase
