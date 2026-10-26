@@ -151,6 +151,25 @@ body::after{content:"";position:fixed;inset:0;z-index:150;pointer-events:none;op
 .banner{margin:0 0 48px;line-height:0;overflow:hidden;background:#CFE4F8;border:2px solid var(--ink);border-radius:10px;box-shadow:6px 6px 0 var(--ink)}
 .banner video,.banner img{display:block;width:100%;height:auto;aspect-ratio:3/1;background:#CFE4F8}
 
+/* availability light (driven by status.js from your Supabase table) */
+.led{--c:#9CA3AF;position:relative;flex:none;display:inline-block;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.95) 0,rgba(255,255,255,0) 40%),var(--c);box-shadow:0 0 10px 1px var(--c)}
+[data-status="available"] .led{--c:#22C55E}
+[data-status="busy"] .led{--c:#EF4444}
+.led::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--c);opacity:0}
+[data-status="available"] .led::after{animation:ledPing 2.2s ease-out infinite}
+@keyframes ledPing{0%{transform:scale(.55);opacity:.75}100%{transform:scale(1.9);opacity:0}}
+.status-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:26px}
+.status-row .pill{margin-bottom:0}
+.status-chip{display:inline-flex;align-items:center;gap:10px;padding:7px 13px 6px 11px;background:#FBF8F4;border:2px solid var(--ink);border-radius:6px;box-shadow:3px 3px 0 var(--ink);font-family:var(--pixel);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);transition:opacity .5s ease}
+.avatar{position:relative;display:inline-flex;flex:none}
+.led-sm{position:absolute;right:-3px;bottom:-3px;width:15px;height:15px;border:2.5px solid var(--bg);box-sizing:border-box;box-shadow:0 0 8px 0 var(--c);transition:opacity .5s ease}
+.status-box{display:flex;align-items:flex-start;gap:14px;margin:0 0 28px;padding:14px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px}
+.status-box .led{margin-top:3px}
+.status-box b{display:block;font-family:var(--pixel);font-weight:400;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.status-box span:not(.led){display:block;margin-top:4px;color:#CFCAC5;font-size:16px;line-height:1.5}
+html:not([data-status]) .status-chip,html:not([data-status]) .led-sm{opacity:0}
+html:not([data-status]) .status-box{display:none}
+
 /* stats */
 .stats{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg)}
 .stat{padding:30px 34px;border-left:1px solid var(--line)}
@@ -312,6 +331,7 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 .lite body::after,.lite .glow{display:none}
 .lite .blob,.lite .cta::before,.lite .cta::after,.lite .spin svg.ring,.lite .pill i{animation:none}
 .lite .photo-card{transform-style:flat}
+.lite .led::after{animation:none}
 .lite .face{filter:none}
 
 /* responsive */
@@ -353,7 +373,7 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 
   #hero{padding-top:26px}
   .hero-grid{gap:46px}
-  .pill{margin-bottom:20px}
+  .status-row{margin-bottom:20px}
   .hero-title{font-size:clamp(42px,12.6vw,64px)}
   .hero-sub{font-size:17px;margin:20px 0 26px}
   .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -421,7 +441,7 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 
 <nav class="nav" id="nav">
   <div class="nav-in">
-    <a href="#hero" class="brand"><img src="logo.png" alt="" onerror="this.style.display='none'">Austin Garcia</a>
+    <a href="#hero" class="brand"><span class="avatar"><img src="logo.png" alt="" onerror="this.style.display='none'"><span class="led led-sm" aria-hidden="true"></span></span>Austin Garcia</a>
     <ul class="links">
       <li><a href="#services">Services</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -467,7 +487,10 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 
     <div class="hero-grid">
       <div>
-        <div class="pill"><i></i>Full-Stack Web Developer</div>
+        <div class="status-row">
+          <div class="pill"><i></i>Full-Stack Web Developer</div>
+          <div class="status-chip" role="status"><span class="led" aria-hidden="true"></span><span data-status-label>Available for projects</span></div>
+        </div>
         <h1 class="hero-title" data-split>Websites built to actually perform.</h1>
         <p class="hero-sub">
           I design and build <b>professional, production-ready websites</b> end to end —
@@ -746,6 +769,10 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
       <div>
         <h2 data-split>Let's build something.</h2>
         <p class="lead">Have a project in mind or just want to say hi? Send me a message.</p>
+        <div class="status-box" role="status">
+          <span class="led" aria-hidden="true"></span>
+          <div><b data-status-label></b><span data-status-msg></span></div>
+        </div>
         <div class="info">
           <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9 6 9-6M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg><span>work.austingarcia@gmail.com</span></div>
           <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Philippines</span></div>
@@ -787,6 +814,8 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
   <div class="mega" id="mega" aria-hidden="true" data-split>Austin Garcia</div>
 </footer>
 
+<script src="config.js"></script>
+<script src="status.js"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
@@ -926,7 +955,7 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 
   var heroAt = '-=0.55';
   tl.from('.banner', { y: 40, opacity: 0, duration: 1.1, ease: 'power3.out' }, heroAt)
-    .from('.pill', { y: 24, opacity: 0, duration: 0.8, ease: 'power3.out' }, '<0.15')
+    .from('.status-row', { y: 24, opacity: 0, duration: 0.8, ease: 'power3.out' }, '<0.15')
     .from('.hero-title .wi', { yPercent: 118, rotate: 4, duration: 1.2, stagger: 0.09, ease: 'expo.out' }, '<0.05')
     .from('.hero-sub', { y: 28, opacity: 0, duration: 0.9, ease: 'power3.out' }, '<0.45')
     .from('.hero-actions .btn', { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, '<0.15')

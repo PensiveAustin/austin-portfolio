@@ -1,0 +1,49 @@
+# Status light — setup (10 minutes, free)
+
+Your site now shows a green (available) or red (busy) light. You change it from a private
+page, `admin.html`, and the live site updates for every visitor — no re-uploading files.
+
+How it works: a tiny Supabase table holds your status. Everyone can *read* it; only *you*
+(signed in) can change it.
+
+## 1. Create the backend
+1. Go to https://supabase.com → **New project** (free plan is fine). Pick any name/region (Singapore is closest).
+2. Open **SQL Editor → New query**, paste everything from `supabase-setup.sql`, press **Run**.
+   You should see "Success".
+
+## 2. Create your admin login
+1. **Authentication → Users → Add user → Create new user.**
+   Use `work.austingarcia@gmail.com` (the email written in the SQL) and a **strong password**.
+   Tick **Auto Confirm User**.
+2. **Authentication → Sign In / Providers → Email** → turn **OFF** "Allow new users to sign up".
+   (So nobody else can ever create an account.)
+
+> Using a different email? Change it in the two `auth.jwt() ->> 'email'` lines in the SQL *before* running it.
+
+## 3. Connect the site
+1. **Project Settings → API** (or **API Keys**). Copy:
+   - **Project URL**
+   - the **anon / publishable** key  ← safe to be public
+2. Open `config.js` and paste them in place of `YOUR_SUPABASE_URL` and `YOUR_SUPABASE_ANON_KEY`.
+3. Upload everything to GitHub as usual.
+
+**Never** put the `service_role` / `secret` key anywhere in these files.
+
+## 4. Use it
+Open `https://pensiveaustin.github.io/austin-portfolio/admin.html`, sign in, tap
+**Available** or **Busy**, optionally add a message, press **Save & go live**.
+Bookmark the page — it isn't linked from your site and search engines are told to ignore it.
+
+## What visitors see
+- A glowing light on your logo in the nav (green pulses, red stays steady)
+- A status chip under the banner: "Available for projects" / "Currently busy"
+- A box above the contact form with your message
+
+If Supabase is ever unreachable, the site shows the last status the visitor saw, or hides the
+light — it never shows a wrong status or breaks the page.
+
+## Files
+- `admin.html` — your private control page
+- `config.js` — your two Supabase values
+- `status.js` — reads the status for the public site
+- `supabase-setup.sql` — run once in Supabase

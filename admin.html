@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F5F1EC">
+<title>Admin — Austin Garcia</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600,700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Silkscreen';font-weight:400;font-display:swap;src:url('vendor/fonts/silkscreen-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Silkscreen';font-weight:700;font-display:swap;src:url('vendor/fonts/silkscreen-latin-700-normal.woff2') format('woff2')}
+:root{--bg:#F5F1EC;--card:#FBF8F4;--ink:#1E1A1C;--text:#3B3B3B;--muted:#6E7073;--line:rgba(30,26,28,.14);
+  --green:#22C55E;--red:#EF4444;--grad:linear-gradient(120deg,#9B3FD1 0%,#E8445F 55%,#F0612A 100%);
+  --display:'Clash Grotesk','Helvetica Neue',Arial,sans-serif;--sans:'Inter','Helvetica Neue',Arial,sans-serif;--pixel:'Silkscreen','Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding:max(24px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
+a{color:inherit}
+:focus-visible{outline:3px solid #9B3FD1;outline-offset:3px;border-radius:8px}
+h1,h2{font-family:var(--display);font-weight:600;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.wrap{max-width:560px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:600;font-size:21px;color:var(--ink);text-decoration:none}
+.brand img{width:40px;height:40px;border-radius:50%}
+.tag{font-family:var(--pixel);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card{background:var(--card);border:2px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--ink);padding:28px}
+.card+.card{margin-top:26px}
+h1{font-size:34px;margin-bottom:6px}
+.sub{color:var(--muted);margin-bottom:22px}
+label,.lbl{display:block;font-family:var(--pixel);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:8px}
+input[type=email],input[type=password],input[type=text]{width:100%;font:inherit;font-size:17px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:10px;padding:13px 14px}
+input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
+.field{margin-bottom:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;font-family:var(--display);font-weight:600;font-size:19px;color:#fff;background:var(--grad);border:0;border-radius:14px;padding:14px 22px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 24px -10px rgba(232,68,95,.65)}
+.btn{text-decoration:none}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn-line{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none;width:auto;min-height:44px;font-size:16px;padding:8px 16px;border-radius:12px}
+.err{margin-top:14px;color:#B42318;font-size:16px;min-height:1.4em}
+.hidden{display:none!important}
+
+/* the light */
+.light-wrap{display:flex;align-items:center;gap:18px;margin-bottom:24px}
+.led{--c:#9CA3AF;position:relative;flex:none;width:46px;height:46px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.95) 0,rgba(255,255,255,0) 42%),var(--c);box-shadow:0 0 24px 4px var(--c),inset 0 -5px 8px rgba(0,0,0,.18);transition:background-color .3s,box-shadow .3s}
+.led::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--c);opacity:0}
+.led[data-s=available]{--c:var(--green)}.led[data-s=busy]{--c:var(--red)}
+.led[data-s=available]::after{animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{transform:scale(.6);opacity:.8}100%{transform:scale(1.8);opacity:0}}
+.now{font-family:var(--display);font-weight:600;font-size:26px;color:var(--ink);line-height:1.15}
+.now small{display:block;margin-top:4px;font-family:var(--pixel);font-weight:400;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* toggle */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.seg button{display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;font-family:var(--display);font-weight:600;font-size:20px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:12px;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
+.seg button i{width:16px;height:16px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.seg button[data-v=available]{--c:var(--green)}.seg button[data-v=busy]{--c:var(--red)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff;box-shadow:4px 4px 0 var(--c);transform:translate(-2px,-2px)}
+.count{float:right;font-family:var(--pixel);font-size:11px;color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.presets button{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 13px;min-height:38px;cursor:pointer}
+.presets button:hover{border-color:var(--ink)}
+.row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:22px}
+.toast{margin-top:16px;min-height:1.5em;font-size:16px}
+.toast.ok{color:#15803D}.toast.bad{color:#B42318}
+.setup{background:#FFF7E6;border-color:#B7791F;box-shadow:6px 6px 0 #B7791F}
+.setup ol{margin:12px 0 0 20px}.setup li{margin:6px 0}.setup code{font-family:Consolas,monospace;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:5px;font-size:15px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:480px){.card{padding:22px 18px}h1{font-size:29px}.seg button{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="index.html"><img src="logo.png" alt="">Admin</a>
+    <span class="tag" id="who"></span>
+  </div>
+
+  <!-- shown until config.js is filled in -->
+  <section class="card setup hidden" id="setup">
+    <h1>Almost there</h1>
+    <p class="sub" style="color:#6B4E16">This page needs your Supabase details first.</p>
+    <ol>
+      <li>Run <code>supabase-setup.sql</code> in Supabase → SQL Editor.</li>
+      <li>Copy your <b>Project URL</b> and <b>anon / publishable key</b>.</li>
+      <li>Paste them into <code>config.js</code> and upload it. Full steps are in <code>SETUP.md</code>.</li>
+    </ol>
+  </section>
+
+  <!-- sign in -->
+  <section class="card hidden" id="login">
+    <h1>Sign in</h1>
+    <p class="sub">Only you can change what your site shows.</p>
+    <form id="loginForm" autocomplete="on">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" inputmode="email" autocapitalize="off" spellcheck="false" required></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <button class="btn" id="loginBtn" type="submit">Sign in</button>
+      <p class="err" id="loginErr" role="alert"></p>
+    </form>
+  </section>
+
+  <!-- control panel -->
+  <section class="card hidden" id="panel">
+    <div class="light-wrap">
+      <div class="led" id="led" data-s="" aria-hidden="true"></div>
+      <div class="now"><span id="nowText">Loading…</span><small id="nowSub"></small></div>
+    </div>
+
+    <p class="lbl">Set your status</p>
+    <div class="seg" role="group" aria-label="Status">
+      <button type="button" data-v="available" aria-pressed="false"><i></i>Available</button>
+      <button type="button" data-v="busy" aria-pressed="false"><i></i>Busy</button>
+    </div>
+
+    <div class="field" style="margin-bottom:0">
+      <label for="msg">Message <span class="count" id="count">0/120</span></label>
+      <input id="msg" type="text" maxlength="120" placeholder="Optional — e.g. Booked until next week" autocomplete="off">
+      <div class="presets" id="presets"></div>
+    </div>
+
+    <div class="row">
+      <button class="btn" id="saveBtn" type="button" style="flex:1 1 220px">Save &amp; go live</button>
+    </div>
+    <p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+    <div class="row" style="margin-top:6px">
+      <a class="btn btn-line" href="index.html" target="_blank" rel="noopener">View site</a>
+      <button class="btn btn-line" id="outBtn" type="button">Sign out</button>
+    </div>
+  </section>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function(){
+  var cfg = window.SITE_CONFIG || {};
+  var URL_ = String(cfg.supabaseUrl || '').replace(/\/+$/, '');
+  var KEY = String(cfg.supabaseAnonKey || '');
+  var SKEY = 'ag_admin_session_v1';
+  var $ = function(id){ return document.getElementById(id); };
+  var LABEL = { available: 'Available for projects', busy: 'Currently busy' };
+  var PRESETS = {
+    available: ['Open to new projects', 'Taking on 1–2 projects this month', 'Replies within 24 hours'],
+    busy: ['Fully booked right now', 'Booked until next week', 'Back soon — message me anyway']
+  };
+  var draft = { state: '', message: '' }, saved = { state: '', message: '', updated_at: null };
+
+  function show(id, on){ $(id).classList.toggle('hidden', !on); }
+  function view(name){ show('setup', name === 'setup'); show('login', name === 'login'); show('panel', name === 'panel'); }
+
+  /* ---------- session ---------- */
+  function getSession(){ try { return JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch(e){ return null; } }
+  function setSession(d){
+    var s = { access_token: d.access_token, refresh_token: d.refresh_token, expires_at: Date.now() + (d.expires_in || 3600) * 1000, email: (d.user && d.user.email) || '' };
+    try { localStorage.setItem(SKEY, JSON.stringify(s)); } catch(e){}
+    return s;
+  }
+  function clearSession(){ try { localStorage.removeItem(SKEY); } catch(e){} }
+
+  function auth(grant, body){
+    return fetch(URL_ + '/auth/v1/token?grant_type=' + grant, {
+      method: 'POST', headers: { apikey: KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+    }).then(function(r){ return r.json().then(function(d){ if(!r.ok){ throw new Error(d.error_description || d.msg || d.message || 'Sign in failed'); } return d; }); });
+  }
+  function freshToken(){
+    var s = getSession();
+    if(!s){ return Promise.reject(new Error('Not signed in')); }
+    if(s.expires_at - Date.now() > 60000){ return Promise.resolve(s.access_token); }
+    return auth('refresh_token', { refresh_token: s.refresh_token }).then(function(d){ return setSession(d).access_token; });
+  }
+
+  /* ---------- data ---------- */
+  function readStatus(){
+    return fetch(URL_ + '/rest/v1/site_status?id=eq.1&select=state,message,updated_at', { headers: { apikey: KEY }, cache: 'no-store' })
+      .then(function(r){ if(!r.ok){ throw new Error('Could not read status (' + r.status + '). Did you run supabase-setup.sql?'); } return r.json(); })
+      .then(function(rows){ if(!rows || !rows[0]){ throw new Error('No status row found. Run supabase-setup.sql again.'); } return rows[0]; });
+  }
+  function writeStatus(token, state, message){
+    return fetch(URL_ + '/rest/v1/site_status?id=eq.1', {
+      method: 'PATCH',
+      headers: { apikey: KEY, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+      body: JSON.stringify({ state: state, message: message })
+    });
+  }
+
+  /* ---------- ui ---------- */
+  function ago(iso){
+    if(!iso){ return ''; }
+    var s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
+    if(s < 60){ return 'just now'; }
+    if(s < 3600){ return Math.floor(s / 60) + ' min ago'; }
+    if(s < 86400){ return Math.floor(s / 3600) + ' h ago'; }
+    return Math.floor(s / 86400) + ' d ago';
+  }
+  function paint(){
+    var st = draft.state;
+    $('led').setAttribute('data-s', st);
+    $('nowText').textContent = st ? LABEL[st] : 'Loading…';
+    var dirty = draft.state !== saved.state || draft.message !== saved.message;
+    $('nowSub').textContent = dirty ? 'Unsaved changes' : (saved.updated_at ? 'Live on your site · updated ' + ago(saved.updated_at) : 'Live on your site');
+    Array.prototype.forEach.call(document.querySelectorAll('.seg button'), function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-v') === st ? 'true' : 'false'); });
+    $('count').textContent = draft.message.length + '/120';
+    var box = $('presets'); box.textContent = '';
+    (PRESETS[st] || []).forEach(function(t){
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = t;
+      b.addEventListener('click', function(){ draft.message = t; $('msg').value = t; paint(); });
+      box.appendChild(b);
+    });
+  }
+  function toast(text, kind){ var t = $('toast'); t.textContent = text; t.className = 'toast ' + (kind || ''); }
+
+  function openPanel(){
+    view('panel'); toast('');
+    var s = getSession(); $('who').textContent = s && s.email ? s.email : '';
+    readStatus().then(function(row){
+      saved = { state: row.state, message: row.message || '', updated_at: row.updated_at };
+      draft = { state: saved.state, message: saved.message };
+      $('msg').value = draft.message; paint();
+    }).catch(function(e){ toast(e.message, 'bad'); });
+  }
+
+  /* ---------- events ---------- */
+  $('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = $('loginBtn'); btn.disabled = true; btn.textContent = 'Signing in…'; $('loginErr').textContent = '';
+    auth('password', { email: $('email').value.trim(), password: $('password').value })
+      .then(function(d){ setSession(d); $('password').value = ''; openPanel(); })
+      .catch(function(err){ $('loginErr').textContent = /invalid/i.test(err.message) ? 'Wrong email or password.' : err.message; })
+      .then(function(){ btn.disabled = false; btn.textContent = 'Sign in'; });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.seg button'), function(b){
+    b.addEventListener('click', function(){ draft.state = b.getAttribute('data-v'); paint(); });
+  });
+  $('msg').addEventListener('input', function(){ draft.message = $('msg').value.slice(0, 120); paint(); });
+
+  function doWrite(retried){
+    return freshToken().then(function(token){ return writeStatus(token, draft.state, draft.message.trim()); })
+      .then(function(r){
+        if((r.status === 401 || r.status === 403) && !retried){          /* token went stale: refresh once and retry */
+          var s = getSession(); if(!s){ throw new Error('expired'); }
+          return auth('refresh_token', { refresh_token: s.refresh_token }).then(function(d){ setSession(d); return doWrite(true); });
+        }
+        if(!r.ok){ throw new Error('Save failed (' + r.status + ').'); }
+        return r.json();
+      });
+  }
+  function save(){
+    var btn = $('saveBtn');
+    if(!draft.state){ toast('Pick Available or Busy first.', 'bad'); return; }
+    btn.disabled = true; btn.textContent = 'Saving…'; toast('');
+    doWrite(false)
+      .then(function(rows){
+        if(!rows || !rows[0]){ throw new Error("Not allowed: this account isn't the site owner. Check the email in supabase-setup.sql."); }
+        saved = { state: rows[0].state, message: rows[0].message || '', updated_at: rows[0].updated_at };
+        draft = { state: saved.state, message: saved.message };
+        try { localStorage.setItem('ag_site_status_v1', JSON.stringify({ state: saved.state, message: saved.message })); } catch(e){}
+        paint(); toast('Saved — your site is updated.', 'ok');
+      })
+      .catch(function(err){
+        if(/expired|not signed in|refresh|jwt/i.test(err.message)){ clearSession(); view('login'); $('loginErr').textContent = 'Your session ended — please sign in again.'; }
+        else { toast(err.message, 'bad'); }
+      })
+      .then(function(){ btn.disabled = false; btn.textContent = 'Save & go live'; });
+  }
+  $('saveBtn').addEventListener('click', save);
+
+  $('outBtn').addEventListener('click', function(){
+    var s = getSession();
+    if(s){ fetch(URL_ + '/auth/v1/logout', { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + s.access_token } }).catch(function(){}); }
+    clearSession(); $('who').textContent = ''; view('login');
+  });
+
+  /* ---------- start ---------- */
+  if(!URL_ || !KEY || /YOUR_SUPABASE/.test(URL_ + KEY)){ view('setup'); }
+  else if(getSession()){ openPanel(); }
+  else { view('login'); }
+})();
+</script>
+</body>
+</html>
