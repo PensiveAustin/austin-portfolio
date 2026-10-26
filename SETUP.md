@@ -49,3 +49,8 @@ light — it never shows a wrong status or breaks the page.
 - `status.js` — reads the status for the public site
 - `status-bot.js` — the pop-up bubble behaviour (the bot art and styles live in `index.html`)
 - `supabase-setup.sql` — run once in Supabase
+
+## Discord DM alerts (optional)
+`api/notify.js` is a Vercel function. When a visitor sends the contact form, your Discord bot DMs you the name, email and message.
+Set `DISCORD_BOT_TOKEN` and `DISCORD_USER_ID` under Vercel > Project > Settings > Environment Variables, then **redeploy**.
+`notifyUrl` in `config.js` points the form at it (blank = off).

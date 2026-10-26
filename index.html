@@ -867,6 +867,17 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
 <script>
+/* Optional: ping Austin on Messenger/Discord via a Cloudflare Worker (set notifyUrl in config.js; blank = off) */
+function notifyOwner(fd){
+  var u = (window.SITE_CONFIG && window.SITE_CONFIG.notifyUrl) || '';
+  if(!/^https:\/\//.test(u)){ return; }
+  try {
+    fetch(u, { method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true,
+      body: JSON.stringify({ name: fd.get('name'), email: fd.get('email'), message: fd.get('message'), botcheck: fd.get('botcheck') || '' }) }).catch(function(){});
+  } catch(e) {}
+}
+</script>
+<script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -885,14 +896,16 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
     label.textContent = 'Sending...';
     status.textContent = '';
     status.className = 'status';
+    var fd = new FormData(form);
     fetch('https://api.web3forms.com/submit', {
-      method:'POST', headers:{'Accept':'application/json'}, body:new FormData(form)
+      method:'POST', headers:{'Accept':'application/json'}, body:fd
     })
     .then(function(r){ return r.json(); })
     .then(function(d){
       if(!d.success){ throw new Error(d.message || 'Submission failed'); }
       label.textContent = 'Send inquiry';
       btn.removeAttribute('disabled');
+      notifyOwner(fd);
       status.textContent = "Message sent — I'll get back to you soon.";
       status.className = 'status ok';
       form.reset();
