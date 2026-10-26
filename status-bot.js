@@ -14,7 +14,7 @@
 
   function place() {                       /* beside the bot if there is room, otherwise hanging below it */
     var rr = row.getBoundingClientRect(), br = btn.getBoundingClientRect(), vw = document.documentElement.clientWidth;
-    bub.classList.remove('bt-side'); bub.style.top = ''; bub.style.left = '0px';
+    bub.classList.remove('bt-side', 'bt-up'); bub.style.top = ''; bub.style.left = '0px';
     var w = bub.offsetWidth, h = bub.offsetHeight, cx = br.left + br.width / 2 - rr.left;
     if (br.right + 14 + w <= vw - 12) {
       bub.classList.add('bt-side');
@@ -28,6 +28,11 @@
     left = Math.max(12 - rr.left, Math.min(left, vw - 12 - w - rr.left));
     bub.style.left = left + 'px';
     bub.style.setProperty('--tx', Math.max(16, Math.min(cx - left, w - 26)) + 'px');
+    var nav = document.getElementById('nav'), navB = nav ? nav.getBoundingClientRect().bottom : 72;
+    if (br.top - h - 14 >= navB + 6) {      /* room above: sit over the banner, not the headline */
+      bub.classList.add('bt-up');
+      bub.style.top = (br.top - rr.top - h - 12) + 'px';
+    }
   }
   function open(auto) {
     clearTimeout(hideTimer); clearTimeout(autoTimer);
