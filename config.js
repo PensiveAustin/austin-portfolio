@@ -1,15 +1,11 @@
 /* ──────────────────────────────────────────────────────────────
-   Site settings. Fill these two values in AFTER you set up Supabase
-   (see SETUP.md). Both are safe to be public — they're not secrets.
+   Site settings. Both values below are PUBLIC by design (safe to upload).
+   NEVER paste a "secret" or "service_role" key into this file.
    ────────────────────────────────────────────────────────────── */
 window.SITE_CONFIG = {
-  // Supabase → Project Settings → API → "Project URL"
-  supabaseUrl: 'YOUR_SUPABASE_URL',
+  supabaseUrl: 'https://zpqujmxsqnezmopumuxf.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwcXVqbXhzcW5lem1vcHVtdXhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMDUyNDEsImV4cCI6MjEwODU4MTI0MX0.SV-HV1uKszaMgdm29_p_XFkHRS6cczXmjOaSSMFvnS4',
 
-  // Supabase → Project Settings → API → "anon public" key (or the "Publishable" key)
-  // NEVER paste the "service_role" / "secret" key here.
-  supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY',
-
-  // Shown until the backend is connected (so the site still works out of the box)
+  // Shown only if the backend can't be reached and nothing is cached
   fallback: { state: 'available', message: '' }
 };
