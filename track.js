@@ -7,6 +7,7 @@
   if (!/^https:\/\//.test(url)) { return; }
   try { if (localStorage.getItem('ag_no_track') === '1') { return; } } catch (e) {}
   if (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.webdriver) { return; }
+  if (/[?&]adminpreview=1/.test(location.search)) { return; }          /* the click-map preview inside admin.html */
 
   function rid(n) {
     var s = '', a = [], i;
@@ -73,20 +74,29 @@
     Array.prototype.forEach.call(document.querySelectorAll('section[id]'), function (s) { io.observe(s); });
   }
 
-  /* what they click (button / link labels only, never form contents) */
+  /* what they click: the button/link label (never form contents) + where on the page, for the click map in admin.html */
   var clicks = 0;
   document.addEventListener('click', function (e) {
     if (clicks >= 30 || !e.target || !e.target.closest) { return; }
+    var de = document.documentElement;
+    var dw = Math.max(de.scrollWidth, window.innerWidth, 1), dh = Math.max(de.scrollHeight, document.body ? document.body.scrollHeight : 0, 1);
+    var o = { t: 'click', vw: window.innerWidth };
+    if (e.pageX || e.pageY) {                                  /* keyboard "clicks" have no position */
+      o.x = Math.min(1000, Math.max(0, Math.round(e.pageX / dw * 1000)));
+      o.y = Math.min(1000, Math.max(0, Math.round(e.pageY / dh * 1000)));
+    }
     var el = e.target.closest('a,button,[role=button]');
-    if (!el) { return; }
-    var label = (el.getAttribute('data-track') || el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
-    var tag = el.tagName === 'A' ? 'link' : 'button';
-    if (!label && el.tagName === 'A') { label = (el.getAttribute('href') || '').slice(0, 40); }
-    if (!label) { label = el.id || ''; }
-    if (!label) { return; }
-    var host = '';
-    try { if (el.tagName === 'A' && el.hostname && el.hostname !== location.hostname) { host = ' → ' + el.hostname.replace(/^www\./, ''); } } catch (er) {}
+    if (el) {
+      var label = (el.getAttribute('data-track') || el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+      var tag = el.tagName === 'A' ? 'link' : 'button';
+      if (!label && el.tagName === 'A') { label = (el.getAttribute('href') || '').slice(0, 40); }
+      if (!label) { label = el.id || ''; }
+      var host = '';
+      try { if (el.tagName === 'A' && el.hostname && el.hostname !== location.hostname) { host = ' → ' + el.hostname.replace(/^www\./, ''); } } catch (er) {}
+      if (label) { o.tg = (tag + ': ' + label + host).slice(0, 80); }
+    }
+    if (o.tg === undefined && o.x === undefined) { return; }
     clicks++;
-    send({ t: 'click', tg: (tag + ': ' + label + host).slice(0, 80) });
+    send(o);
   }, true);
 })();

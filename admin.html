@@ -105,6 +105,12 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
 .note{font-size:14px;color:var(--muted);margin-top:14px}
 .empty{color:var(--muted);font-size:15px;padding:6px 0}
 @media (max-width:480px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+.mapbox{margin-top:8px;border:2px solid var(--ink);border-radius:12px;background:#fff;overflow:auto;max-height:560px}
+.mapsize{position:relative;margin:0 auto}
+.mapin{position:absolute;left:0;top:0;transform-origin:0 0}
+.mapin iframe{display:block;border:0;background:#fff;pointer-events:none}
+.mapin canvas{position:absolute;left:0;top:0;pointer-events:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:480px){.card{padding:22px 18px}h1{font-size:29px}.seg button{font-size:18px}}
 </style>
@@ -202,6 +208,18 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
     <div class="sec">
       <p class="lbl">How far visitors get <span class="count">% of visits</span></p>
       <ul class="bars" id="sections"></ul>
+    </div>
+
+    <div class="sec">
+      <p class="lbl">Click map <span class="count" id="mapCount"></span></p>
+      <div class="tabs" id="mapTabs" role="group" aria-label="Preview size">
+        <button type="button" data-m="0" aria-pressed="true">Desktop</button>
+        <button type="button" data-m="1" aria-pressed="false">Mobile</button>
+      </div>
+      <div class="mapbox" id="mapBox"><div class="mapsize" id="mapSize"><div class="mapin" id="mapIn">
+        <iframe id="mapFrame" title="Preview of your site" tabindex="-1"></iframe><canvas id="mapCanvas"></canvas>
+      </div></div></div>
+      <p class="note" id="mapNote">Your real page, with a glow wherever visitors tapped or clicked. Brighter = more clicks. Scroll inside the preview.</p>
     </div>
 
     <div class="sec">
@@ -502,6 +520,7 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
       render(j);
       try { var c = JSON.parse(localStorage.getItem(AKEY) || '{}'); c[st.days] = { at: Date.now(), data: j }; localStorage.setItem(AKEY, JSON.stringify(c)); } catch(e){}
       $('statsStamp').textContent = 'Updated just now';
+      loadMap();
     }).catch(function(err){
       if(/expired|not signed in|refresh|jwt/i.test(err.message)){ clearSession(); view('login'); $('loginErr').textContent = 'Your session ended — please sign in again.'; }
       else { msg(err.message, 'bad'); }
@@ -525,8 +544,83 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
     Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function(b){
       b.addEventListener('click', function(){ st.tab = b.getAttribute('data-k'); pressed('#tabs', 'data-k', st.tab); renderTab(); });
     });
+    initMap();
     $('statsRefresh').addEventListener('click', loadStats);
     st.timer = setInterval(function(){ if(!document.hidden && !$('stats').classList.contains('hidden')){ loadStats(); } }, 60000);
+  }
+
+
+  /* ---------- click map: your real page + where visitors clicked ---------- */
+  var map = { mobile: false, pts: [], n: 0, H: 0, loaded: false };
+  function mapSetNote(t){ $('mapNote').textContent = t; }
+  function mapDraw(){
+    var W = map.mobile ? 390 : 1280, H = map.H || 3000;
+    var box = $('mapBox'), avail = box.clientWidth || 560, s = Math.min(1, avail / W);
+    var fr = $('mapFrame'), cv = $('mapCanvas'), inn = $('mapIn'), size = $('mapSize');
+    fr.style.width = W + 'px'; fr.style.height = H + 'px';
+    cv.width = W; cv.height = H; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    inn.style.width = W + 'px'; inn.style.height = H + 'px'; inn.style.transform = 'scale(' + s + ')';
+    size.style.width = Math.round(W * s) + 'px'; size.style.height = Math.round(H * s) + 'px';
+    var ctx = cv.getContext('2d'); ctx.clearRect(0, 0, W, H);
+    var r = map.mobile ? 30 : 34;
+    map.pts.forEach(function(p){
+      var x = p[0] / 1000 * W, y = p[1] / 1000 * H;
+      var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, 'rgba(232,68,95,.42)'); g.addColorStop(.55, 'rgba(240,97,42,.16)'); g.addColorStop(1, 'rgba(240,97,42,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+    });
+    if(map.pts.length && map.pts.length <= 500){
+      map.pts.forEach(function(p){
+        var x = p[0] / 1000 * W, y = p[1] / 1000 * H;
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, 6.2832); ctx.fillStyle = '#1E1A1C'; ctx.fill();
+        ctx.lineWidth = 2; ctx.strokeStyle = '#fff'; ctx.stroke();
+      });
+    }
+  }
+  function mapMeasure(){
+    try {
+      var d = $('mapFrame').contentDocument;
+      var h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
+      if(h > 300 && Math.abs(h - map.H) > 4){ map.H = h; mapDraw(); }
+    } catch(e){ mapSetNote('Preview blocked: admin.html and index.html must be on the same address.'); }
+  }
+  function mapLoadFrame(){
+    var fr = $('mapFrame'), W = map.mobile ? 390 : 1280;
+    fr.style.width = W + 'px'; fr.style.height = '900px'; map.H = 0;
+    fr.onload = function(){ [200, 1200, 3000].forEach(function(ms){ setTimeout(mapMeasure, ms); }); };
+    fr.src = 'index.html?adminpreview=1&w=' + W;
+    mapDraw();
+  }
+  function loadMap(){
+    freshToken().then(function(token){
+      return fetch(URL_ + '/rest/v1/rpc/analytics_clicks', {
+        method: 'POST', cache: 'no-store',
+        headers: { apikey: KEY, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ days: st.days, tz: (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'), mobile: map.mobile })
+      });
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        if(!r.ok){
+          if(r.status === 404 || /PGRST202|could not find the function/i.test(j.message || j.code || '')){ throw new Error('Click map isn\'t set up yet: run supabase-heatmap.sql in Supabase → SQL Editor.'); }
+          throw new Error('Could not load the click map (' + r.status + ').');
+        }
+        return j;
+      });
+    }).then(function(j){
+      map.pts = j.points || []; map.n = j.n || 0;
+      $('mapCount').textContent = fmt(map.n) + ' clicks';
+      mapSetNote(map.n ? 'Your real page, with a glow wherever visitors tapped or clicked. Brighter = more clicks. Scroll inside the preview.' : 'No clicks recorded for this size yet. Clicks show up here as visitors tap around your site.');
+      if(!map.loaded){ map.loaded = true; mapLoadFrame(); } else { mapDraw(); }
+    }).catch(function(err){ mapSetNote(err.message); });
+  }
+  function initMap(){
+    Array.prototype.forEach.call(document.querySelectorAll('#mapTabs button'), function(b){
+      b.addEventListener('click', function(){
+        map.mobile = b.getAttribute('data-m') === '1'; pressed('#mapTabs', 'data-m', map.mobile ? 1 : 0);
+        map.loaded = false; map.pts = []; loadMap();
+      });
+    });
+    window.addEventListener('resize', function(){ if(map.loaded){ mapDraw(); } });
   }
 
   /* ---------- start ---------- */

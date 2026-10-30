@@ -77,6 +77,11 @@ module.exports = async (req, res) => {
     target: (d.t === 'click' || d.t === 'section') ? (clean(d.tg, 80) || null) : null
   };
   if (d.t === 'view') { Object.assign(row, parseUA(ua)); }
+  if (d.t === 'click') {                                           /* click-map position (needs supabase-heatmap.sql) */
+    const x = int(d.x, 0, 1000), y = int(d.y, 0, 1000), vw = int(d.vw, 0, 10000);
+    if (x !== null && y !== null) { row.x = x; row.y = y; }
+    if (vw !== null) { row.vw = vw; }
+  }
 
   const base = String(process.env.SUPABASE_URL || '').replace(/\/+$/, '');
   const key = String(process.env.SUPABASE_SERVICE_ROLE_KEY || '');

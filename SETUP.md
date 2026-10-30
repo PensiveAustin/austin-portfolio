@@ -74,3 +74,10 @@ Notes
 - Country comes from Vercel, so it works for visitors who reach the site through Vercel's network. If a visit shows "Unknown", that's why.
 - To keep the table small, run the commented `delete` line at the bottom of `supabase-analytics.sql` once in a while.
 - Files: `track.js` (runs on your public site), `api/hit.js` (saves visits), `supabase-analytics.sql` (table + report), `admin.html` (the dashboard).
+
+### Click map (added later)
+The Visitors card also has a **Click map**: your real page with a glow wherever visitors clicked or tapped (switch Desktop / Mobile).
+1. Supabase → SQL Editor → run `supabase-heatmap.sql` once.
+2. Upload the updated `track.js`, `api/hit.js`, `admin.html`, then redeploy on Vercel.
+Only clicks made after this update have positions, so the map starts empty and fills as people visit.
+The preview loads `index.html` inside admin.html, so both must be on the same address (e.g. both on austin-garcia-portfolio.vercel.app).
