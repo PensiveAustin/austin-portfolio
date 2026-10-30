@@ -54,3 +54,17 @@ light — it never shows a wrong status or breaks the page.
 `api/notify.js` is a Vercel function. When a visitor sends the contact form, your Discord bot DMs you the name, email and message.
 Set `DISCORD_BOT_TOKEN` and `DISCORD_USER_ID` under Vercel > Project > Settings > Environment Variables, then **redeploy**.
 `notifyUrl` in `config.js` points the form at it (blank = off).
+
+## Visitor analytics — Microsoft Clarity (free)
+Clarity records clicks, scrolls and session replays on the **public** site (`index.html`) and shows the headline numbers inside `admin.html`.
+
+1. Go to https://clarity.microsoft.com → **New project** → enter your site address. Copy the **Project ID** (Settings → Overview).
+2. Paste it into `clarityProjectId` in `config.js`, upload, done. Visits start appearing in Clarity within a few minutes.
+3. **Numbers inside admin.html (optional, needs Vercel):**
+   - In Clarity → **Settings → Data Export → Generate new API token**.
+   - In Vercel → Project → Settings → Environment Variables, add `CLARITY_API_TOKEN` (mark Sensitive), `SUPABASE_URL` and `SUPABASE_ANON_KEY` (same values as `config.js`). Redeploy.
+   - `api/clarity.js` only answers when you're signed in to admin as the owner email, and caches answers 15 min because Clarity allows 10 API calls/day.
+4. Recordings, heatmaps and scroll maps live in Clarity itself — admin.html has a button that opens your project.
+
+Your own visits are skipped automatically once you've signed in to admin.html in a browser (`ag_no_track` flag), and Do Not Track visitors are skipped too.
+Files: `clarity.js` (loads the tracker), `api/clarity.js` (secure proxy for the numbers).

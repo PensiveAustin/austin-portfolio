@@ -22,7 +22,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--s
 a{color:inherit}
 :focus-visible{outline:3px solid #9B3FD1;outline-offset:3px;border-radius:8px}
 h1,h2{font-family:var(--display);font-weight:600;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
-.wrap{max-width:560px;margin:0 auto}
+.wrap{max-width:600px;margin:0 auto}
 .top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
 .brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:600;font-size:21px;color:var(--ink);text-decoration:none}
 .brand img{width:40px;height:40px;border-radius:50%}
@@ -68,6 +68,29 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
 .toast.ok{color:#15803D}.toast.bad{color:#B42318}
 .setup{background:#FFF7E6;border-color:#B7791F;box-shadow:6px 6px 0 #B7791F}
 .setup ol{margin:12px 0 0 20px}.setup li{margin:6px 0}.setup code{font-family:Consolas,monospace;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:5px;font-size:15px}
+
+/* analytics */
+.stats-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.stats-head h2{font-size:28px}
+.range{display:inline-flex;border:2px solid var(--ink);border-radius:10px;overflow:hidden}
+.range button{font-family:var(--pixel);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:#fff;border:0;padding:9px 12px;min-height:38px;cursor:pointer}
+.range button+button{border-left:2px solid var(--ink)}
+.range button[aria-pressed=true]{background:var(--ink);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.kpi{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:14px}
+.kpi b{display:block;font-family:var(--display);font-weight:600;font-size:30px;line-height:1.1;color:var(--ink)}
+.kpi span{font-family:var(--pixel);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mini{margin-top:20px}
+.bars{list-style:none}
+.bars li{position:relative;display:flex;justify-content:space-between;gap:12px;padding:8px 10px;margin-top:6px;border-radius:8px;background:var(--bg);overflow:hidden;font-size:15px}
+.bars li i{position:absolute;inset:0 auto 0 0;background:rgba(155,63,209,.16);z-index:0}
+.bars li span{position:relative;z-index:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.bars li em{position:relative;z-index:1;font-style:normal;font-family:var(--pixel);font-size:12px;color:var(--ink)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.tabs button{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 13px;min-height:38px;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.note{font-size:14px;color:var(--muted);margin-top:14px}
+.empty{color:var(--muted);font-size:15px;padding:8px 0}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:480px){.card{padding:22px 18px}h1{font-size:29px}.seg button{font-size:18px}}
 </style>
@@ -131,6 +154,40 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
       <button class="btn btn-line" id="outBtn" type="button">Sign out</button>
     </div>
   </section>
+
+  <!-- analytics (Microsoft Clarity) -->
+  <section class="card hidden" id="stats">
+    <div class="stats-head">
+      <h2>Visitors</h2>
+      <div class="range" role="group" aria-label="Time range" id="range">
+        <button type="button" data-d="1" aria-pressed="false">24h</button>
+        <button type="button" data-d="2" aria-pressed="false">48h</button>
+        <button type="button" data-d="3" aria-pressed="true">72h</button>
+      </div>
+    </div>
+    <p class="sub" style="margin-bottom:0" id="statsSub">Powered by Microsoft Clarity</p>
+
+    <div id="statsBody">
+      <div class="kpis" id="kpis"></div>
+
+      <p class="lbl">Break down by</p>
+      <div class="tabs" id="tabs" role="group" aria-label="Break down by">
+        <button type="button" data-by="" aria-pressed="true">Top pages</button>
+        <button type="button" data-by="device" aria-pressed="false">Devices</button>
+        <button type="button" data-by="country" aria-pressed="false">Countries</button>
+        <button type="button" data-by="source" aria-pressed="false">Sources</button>
+      </div>
+      <ul class="bars" id="bars"></ul>
+    </div>
+
+    <p class="toast" id="statsMsg" role="status" aria-live="polite"></p>
+
+    <div class="row" style="margin-top:6px">
+      <a class="btn" id="clarityLink" href="https://clarity.microsoft.com/" target="_blank" rel="noopener" style="flex:1 1 220px">Open Clarity (recordings &amp; heatmaps)</a>
+      <button class="btn btn-line" id="statsRefresh" type="button">Refresh</button>
+    </div>
+    <p class="note">Clarity only shares the last 1–3 days here, and limits this page to 10 refreshes a day, so numbers are cached for 15 minutes. For session recordings, heatmaps and scroll maps, use the button above.</p>
+  </section>
 </div>
 
 <script src="config.js"></script>
@@ -149,7 +206,7 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
   var draft = { state: '', message: '' }, saved = { state: '', message: '', updated_at: null };
 
   function show(id, on){ $(id).classList.toggle('hidden', !on); }
-  function view(name){ show('setup', name === 'setup'); show('login', name === 'login'); show('panel', name === 'panel'); }
+  function view(name){ show('setup', name === 'setup'); show('login', name === 'login'); show('panel', name === 'panel'); show('stats', name === 'panel'); }
 
   /* ---------- session ---------- */
   function getSession(){ try { return JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch(e){ return null; } }
@@ -214,6 +271,8 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
 
   function openPanel(){
     view('panel'); toast('');
+    try { localStorage.setItem('ag_no_track', '1'); } catch(e){}      /* keeps clarity.js from recording your own visits on this browser */
+    initStats();
     var s = getSession(); $('who').textContent = s && s.email ? s.email : '';
     readStatus().then(function(row){
       saved = { state: row.state, message: row.message || '', updated_at: row.updated_at };
@@ -273,6 +332,138 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
     if(s){ fetch(URL_ + '/auth/v1/logout', { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + s.access_token } }).catch(function(){}); }
     clearSession(); $('who').textContent = ''; view('login');
   });
+
+
+  /* ---------- analytics (Microsoft Clarity via /api/clarity) ---------- */
+  var CKEY = 'ag_clarity_cache_v1', FRESH = 30 * 60 * 1000;
+  var stats = { days: '3', by: '' }, statsReady = false;
+
+  function lc(k){ return String(k).toLowerCase().replace(/[^a-z]/g, ''); }
+  function pick(row, names){
+    if(!row){ return undefined; }
+    var keys = Object.keys(row);
+    for(var i = 0; i < names.length; i++){
+      for(var j = 0; j < keys.length; j++){ if(lc(keys[j]) === lc(names[i])){ return row[keys[j]]; } }
+    }
+  }
+  function num(v){ var n = parseFloat(v); return isFinite(n) ? n : 0; }
+  function fmt(n){ return Math.round(n).toLocaleString(); }
+  function metric(data, name){
+    var list = Array.isArray(data) ? data : [];
+    for(var i = 0; i < list.length; i++){ if(lc(list[i].metricName) === lc(name)){ return list[i].information || []; } }
+    return [];
+  }
+  function clock(sec){ sec = Math.round(sec); return sec >= 60 ? Math.floor(sec / 60) + 'm ' + (sec % 60) + 's' : sec + 's'; }
+  function labelOf(row){
+    var keys = Object.keys(row);
+    for(var i = 0; i < keys.length; i++){
+      if(typeof row[keys[i]] === 'string' && !/count|percent|time|depth|users|sessions|visits|views|total/i.test(keys[i]) && isNaN(parseFloat(row[keys[i]]))){ return row[keys[i]]; }
+    }
+    return 'Unknown';
+  }
+  function statsMsg(t, kind){ var m = $('statsMsg'); m.textContent = t || ''; m.className = 'toast ' + (kind || ''); }
+
+  function kpi(value, label){
+    var d = document.createElement('div'); d.className = 'kpi';
+    var b = document.createElement('b'); b.textContent = value;
+    var s = document.createElement('span'); s.textContent = label;
+    d.appendChild(b); d.appendChild(s); return d;
+  }
+  function renderKpis(data){
+    var box = $('kpis'); box.textContent = '';
+    var t = metric(data, 'Traffic')[0];
+    if(!t){ var e = document.createElement('p'); e.className = 'empty'; e.textContent = 'No visits recorded in this window yet.'; box.appendChild(e); return; }
+    var total = num(pick(t, ['totalSessionCount'])), bots = num(pick(t, ['totalBotSessionCount']));
+    var users = num(pick(t, ['distantUserCount', 'distinctUserCount']));
+    var pps = num(pick(t, ['PagesPerSessionPercentage', 'pagesPerSession']));
+    var scroll = pick(metric(data, 'ScrollDepth')[0], ['averageScrollDepth', 'scrollDepth']);
+    var eng = metric(data, 'EngagementTime')[0];
+    var active = pick(eng, ['activeTime']), tot = pick(eng, ['totalTime']);
+    box.appendChild(kpi(fmt(total), 'Sessions'));
+    box.appendChild(kpi(fmt(users), 'Unique visitors'));
+    if(pps){ box.appendChild(kpi(pps.toFixed(1), 'Pages / session')); }
+    if(scroll !== undefined){ box.appendChild(kpi(num(scroll).toFixed(0) + '%', 'Avg scroll depth')); }
+    if(active !== undefined || tot !== undefined){ box.appendChild(kpi(clock(num(active !== undefined ? active : tot)), 'Time on site')); }
+    if(bots){ box.appendChild(kpi(fmt(bots), 'Bot sessions')); }
+    var rage = metric(data, 'RageClickCount')[0], dead = metric(data, 'DeadClickCount')[0];
+    var r = num(pick(rage, ['sessionsWithMetricPercentage'])), d = num(pick(dead, ['sessionsWithMetricPercentage']));
+    if(r){ box.appendChild(kpi(r.toFixed(1) + '%', 'Sessions w/ rage clicks')); }
+    if(d){ box.appendChild(kpi(d.toFixed(1) + '%', 'Sessions w/ dead clicks')); }
+  }
+  function renderBars(rows, valueNames, labelFn){
+    var ul = $('bars'); ul.textContent = '';
+    var items = (rows || []).map(function(r){ return { label: labelFn(r), v: num(pick(r, valueNames)) }; })
+      .filter(function(x){ return x.v > 0; }).sort(function(a, b){ return b.v - a.v; }).slice(0, 8);
+    if(!items.length){ var li = document.createElement('li'); li.textContent = 'Nothing to show yet.'; ul.appendChild(li); return; }
+    var max = items[0].v;
+    items.forEach(function(x){
+      var li = document.createElement('li');
+      var bar = document.createElement('i'); bar.style.width = Math.max(4, x.v / max * 100) + '%';
+      var s = document.createElement('span'); s.textContent = x.label;              /* textContent: page URLs come from visitors */
+      var e = document.createElement('em'); e.textContent = fmt(x.v);
+      li.appendChild(bar); li.appendChild(s); li.appendChild(e); ul.appendChild(li);
+    });
+  }
+  function cleanUrl(u){ return String(u || '/').replace(/^https?:\/\/[^\/]+/i, '').replace(/[?#].*$/, '') || '/'; }
+
+  function drawBreakdown(data, by){
+    if(!by){
+      renderBars(metric(data, 'PopularPages'), ['visitsCount', 'sessionsCount', 'totalSessionCount'], function(r){ return cleanUrl(pick(r, ['url']) || labelOf(r)); });
+    } else {
+      renderBars(metric(data, 'Traffic'), ['totalSessionCount', 'sessionsCount'], labelOf);
+    }
+  }
+
+  function loadStats(opts){
+    opts = opts || {};
+    var cfg_ = String(cfg.analyticsUrl || '');
+    if(!cfg_){ statsMsg('Live numbers are off — open Clarity with the button below.'); $('statsBody').classList.add('hidden'); return Promise.resolve(); }
+    var ck = stats.days + '|' + stats.by, cache = {};
+    try { cache = JSON.parse(localStorage.getItem(CKEY) || '{}'); } catch(e){}
+    var hit = cache[ck];
+    if(hit && !opts.force){ renderKpis(hit.data); drawBreakdown(hit.data, stats.by); $('statsSub').textContent = 'Microsoft Clarity · updated ' + ago(new Date(hit.at).toISOString()); if(Date.now() - hit.at < FRESH){ return Promise.resolve(); } }
+    statsMsg('Loading…'); $('statsRefresh').disabled = true;
+    return freshToken().then(function(token){
+      return fetch(cfg_ + '?days=' + stats.days + (stats.by ? '&by=' + stats.by : ''), { headers: { Authorization: 'Bearer ' + token } });
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        if(!r.ok){ throw new Error(j.hint || j.error || ('Analytics failed (' + r.status + ')')); }
+        return j;
+      });
+    }).then(function(j){
+      $('statsBody').classList.remove('hidden');
+      cache[ck] = { at: Date.now(), data: j.data };
+      try { localStorage.setItem(CKEY, JSON.stringify(cache)); } catch(e){}
+      renderKpis(j.data); drawBreakdown(j.data, stats.by);
+      $('statsSub').textContent = 'Microsoft Clarity · updated just now' + (j.stale ? ' (daily limit reached, showing last data)' : '');
+      statsMsg('');
+    }).catch(function(err){
+      statsMsg(err.message, 'bad');
+    }).then(function(){ $('statsRefresh').disabled = false; });
+  }
+
+  function initStats(){
+    var pid = String(cfg.clarityProjectId || '').trim();
+    if(pid){ $('clarityLink').href = 'https://clarity.microsoft.com/projects/view/' + encodeURIComponent(pid) + '/dashboard'; }
+    if(!pid){ statsMsg('Add your Clarity Project ID to config.js to start collecting visits.', 'bad'); }
+    if(statsReady){ return; } statsReady = true;
+    Array.prototype.forEach.call(document.querySelectorAll('#range button'), function(b){
+      b.addEventListener('click', function(){
+        stats.days = b.getAttribute('data-d');
+        Array.prototype.forEach.call(document.querySelectorAll('#range button'), function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        loadStats();
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function(b){
+      b.addEventListener('click', function(){
+        stats.by = b.getAttribute('data-by');
+        Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        loadStats();
+      });
+    });
+    $('statsRefresh').addEventListener('click', function(){ loadStats({ force: true }); });
+    if(pid){ loadStats(); }
+  }
 
   /* ---------- start ---------- */
   if(!URL_ || !KEY || /YOUR_SUPABASE/.test(URL_ + KEY)){ view('setup'); }
