@@ -55,29 +55,16 @@ light — it never shows a wrong status or breaks the page.
 Set `DISCORD_BOT_TOKEN` and `DISCORD_USER_ID` under Vercel > Project > Settings > Environment Variables, then **redeploy**.
 `notifyUrl` in `config.js` points the form at it (blank = off).
 
-## Visitor analytics — your own, inside admin.html (free)
-`index.html` quietly logs each visit to your Supabase, and the **Visitors** card in `admin.html` shows it:
-visitors, page views, time on site, scroll depth, which sections people reach, what they click, countries, devices, sources and the latest visits.
-No third-party account, no cookies, no IP addresses saved.
+## Visitor analytics — Microsoft Clarity (free)
+Clarity records clicks, scrolls and session replays on the **public** site (`index.html`) and shows the headline numbers inside `admin.html`.
 
-1. **Supabase → SQL Editor → New query**: paste everything from `supabase-analytics.sql` → **Run**. (Same owner email as the status light.)
-2. **Vercel → Project → Settings → Environment Variables**, add:
-   - `SUPABASE_URL` — your Project URL (same as `config.js`)
-   - `SUPABASE_SERVICE_ROLE_KEY` — Supabase → Project Settings → API → the **service_role / secret** key. Mark it **Sensitive**.
-   This key lives ONLY in Vercel. Never paste it into `config.js` or any uploaded file.
-3. **Redeploy** on Vercel so `api/hit.js` picks the variables up.
-4. Upload the updated files to GitHub as usual. `trackUrl` in `config.js` already points at `/api/hit`; set it to `''` to switch tracking off.
-5. Open your site in a private window, scroll around, then open admin.html — your visit shows under **Latest visits**.
+1. Go to https://clarity.microsoft.com → **New project** → enter your site address. Copy the **Project ID** (Settings → Overview).
+2. Paste it into `clarityProjectId` in `config.js`, upload, done. Visits start appearing in Clarity within a few minutes.
+3. **Numbers inside admin.html (optional, needs Vercel):**
+   - In Clarity → **Settings → Data Export → Generate new API token**.
+   - In Vercel → Project → Settings → Environment Variables, add `CLARITY_API_TOKEN` (mark Sensitive), `SUPABASE_URL` and `SUPABASE_ANON_KEY` (same values as `config.js`). Redeploy.
+   - `api/clarity.js` only answers when you're signed in to admin as the owner email, and caches answers 15 min because Clarity allows 10 API calls/day.
+4. Recordings, heatmaps and scroll maps live in Clarity itself — admin.html has a button that opens your project.
 
-Notes
-- Once you've signed in to admin.html in a browser, that browser's own visits are no longer counted. Visitors with Do Not Track, bots and crawlers are skipped.
-- Country comes from Vercel, so it works for visitors who reach the site through Vercel's network. If a visit shows "Unknown", that's why.
-- To keep the table small, run the commented `delete` line at the bottom of `supabase-analytics.sql` once in a while.
-- Files: `track.js` (runs on your public site), `api/hit.js` (saves visits), `supabase-analytics.sql` (table + report), `admin.html` (the dashboard).
-
-### Click map (added later)
-The Visitors card also has a **Click map**: your real page with a glow wherever visitors clicked or tapped (switch Desktop / Mobile).
-1. Supabase → SQL Editor → run `supabase-heatmap.sql` once.
-2. Upload the updated `track.js`, `api/hit.js`, `admin.html`, then redeploy on Vercel.
-Only clicks made after this update have positions, so the map starts empty and fills as people visit.
-The preview loads `index.html` inside admin.html, so both must be on the same address (e.g. both on austin-garcia-portfolio.vercel.app).
+Your own visits are skipped automatically once you've signed in to admin.html in a browser (`ag_no_track` flag), and Do Not Track visitors are skipped too.
+Files: `clarity.js` (loads the tracker), `api/clarity.js` (secure proxy for the numbers).

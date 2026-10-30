@@ -22,7 +22,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--s
 a{color:inherit}
 :focus-visible{outline:3px solid #9B3FD1;outline-offset:3px;border-radius:8px}
 h1,h2{font-family:var(--display);font-weight:600;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
-.wrap{max-width:640px;margin:0 auto}
+.wrap{max-width:600px;margin:0 auto}
 .top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
 .brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:600;font-size:21px;color:var(--ink);text-decoration:none}
 .brand img{width:40px;height:40px;border-radius:50%}
@@ -70,47 +70,27 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
 .setup ol{margin:12px 0 0 20px}.setup li{margin:6px 0}.setup code{font-family:Consolas,monospace;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:5px;font-size:15px}
 
 /* analytics */
-.stats-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.stats-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .stats-head h2{font-size:28px}
 .range{display:inline-flex;border:2px solid var(--ink);border-radius:10px;overflow:hidden}
 .range button{font-family:var(--pixel);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:#fff;border:0;padding:9px 12px;min-height:38px;cursor:pointer}
 .range button+button{border-left:2px solid var(--ink)}
 .range button[aria-pressed=true]{background:var(--ink);color:#fff}
-.online{display:inline-flex;align-items:center;gap:8px;margin:6px 0 0;font-family:var(--pixel);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.online i{width:10px;height:10px;border-radius:50%;background:#9CA3AF}
-.online.live i{background:var(--green);box-shadow:0 0 8px var(--green)}
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
-.kpi{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:12px}
-.kpi b{display:block;font-family:var(--display);font-weight:600;font-size:27px;line-height:1.1;color:var(--ink)}
-.kpi span{font-family:var(--pixel);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
-.chart{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:12px 12px 8px;margin-bottom:6px}
-.chart svg{display:block;width:100%;height:auto}
-.chart .ax{font-family:var(--pixel);font-size:11px;fill:var(--muted)}
-.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:2px 0 0 2px}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
-.sec{margin-top:26px}
-.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
-.tabs button{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 13px;min-height:38px;cursor:pointer}
-.tabs button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.kpi{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:14px}
+.kpi b{display:block;font-family:var(--display);font-weight:600;font-size:30px;line-height:1.1;color:var(--ink)}
+.kpi span{font-family:var(--pixel);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mini{margin-top:20px}
 .bars{list-style:none}
 .bars li{position:relative;display:flex;justify-content:space-between;gap:12px;padding:8px 10px;margin-top:6px;border-radius:8px;background:var(--bg);overflow:hidden;font-size:15px}
 .bars li i{position:absolute;inset:0 auto 0 0;background:rgba(155,63,209,.16);z-index:0}
 .bars li span{position:relative;z-index:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
-.bars li em{position:relative;z-index:1;flex:none;font-style:normal;font-family:var(--pixel);font-size:12px;color:var(--ink)}
-.recent{list-style:none}
-.recent li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
-.recent li:first-child{border-top:0}
-.recent .p{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
-.recent .w{flex:none;color:var(--muted);font-size:13px;text-align:right}
+.bars li em{position:relative;z-index:1;font-style:normal;font-family:var(--pixel);font-size:12px;color:var(--ink)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.tabs button{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 13px;min-height:38px;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
 .note{font-size:14px;color:var(--muted);margin-top:14px}
-.empty{color:var(--muted);font-size:15px;padding:6px 0}
-@media (max-width:480px){.kpis{grid-template-columns:repeat(2,1fr)}}
-
-.mapbox{margin-top:8px;border:2px solid var(--ink);border-radius:12px;background:#fff;overflow:auto;max-height:560px}
-.mapsize{position:relative;margin:0 auto}
-.mapin{position:absolute;left:0;top:0;transform-origin:0 0}
-.mapin iframe{display:block;border:0;background:#fff;pointer-events:none}
-.mapin canvas{position:absolute;left:0;top:0;pointer-events:none}
+.empty{color:var(--muted);font-size:15px;padding:8px 0}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:480px){.card{padding:22px 18px}h1{font-size:29px}.seg button{font-size:18px}}
 </style>
@@ -175,69 +155,38 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
     </div>
   </section>
 
-  <!-- visitor analytics (your own, stored in your Supabase) -->
+  <!-- analytics (Microsoft Clarity) -->
   <section class="card hidden" id="stats">
     <div class="stats-head">
       <h2>Visitors</h2>
       <div class="range" role="group" aria-label="Time range" id="range">
-        <button type="button" data-d="1" aria-pressed="false">Today</button>
-        <button type="button" data-d="7" aria-pressed="false">7d</button>
-        <button type="button" data-d="30" aria-pressed="true">30d</button>
-        <button type="button" data-d="90" aria-pressed="false">90d</button>
+        <button type="button" data-d="1" aria-pressed="false">24h</button>
+        <button type="button" data-d="2" aria-pressed="false">48h</button>
+        <button type="button" data-d="3" aria-pressed="true">72h</button>
       </div>
     </div>
-    <p class="online" id="online"><i></i><span id="onlineText">Loading…</span></p>
+    <p class="sub" style="margin-bottom:0" id="statsSub">Powered by Microsoft Clarity</p>
 
-    <div class="kpis" id="kpis"></div>
+    <div id="statsBody">
+      <div class="kpis" id="kpis"></div>
 
-    <div class="chart"><svg id="chart" viewBox="0 0 600 170" role="img" aria-label="Page views per day"></svg></div>
-    <div class="legend"><span><i style="background:rgba(155,63,209,.35)"></i>Page views</span><span><i style="background:#E8445F"></i>Visitors</span></div>
-
-    <div class="sec">
+      <p class="lbl">Break down by</p>
       <div class="tabs" id="tabs" role="group" aria-label="Break down by">
-        <button type="button" data-k="pages" aria-pressed="true">Pages</button>
-        <button type="button" data-k="referrers" aria-pressed="false">Sources</button>
-        <button type="button" data-k="countries" aria-pressed="false">Countries</button>
-        <button type="button" data-k="devices" aria-pressed="false">Devices</button>
-        <button type="button" data-k="browsers" aria-pressed="false">Browsers</button>
-        <button type="button" data-k="systems" aria-pressed="false">Systems</button>
+        <button type="button" data-by="" aria-pressed="true">Top pages</button>
+        <button type="button" data-by="device" aria-pressed="false">Devices</button>
+        <button type="button" data-by="country" aria-pressed="false">Countries</button>
+        <button type="button" data-by="source" aria-pressed="false">Sources</button>
       </div>
       <ul class="bars" id="bars"></ul>
     </div>
 
-    <div class="sec">
-      <p class="lbl">How far visitors get <span class="count">% of visits</span></p>
-      <ul class="bars" id="sections"></ul>
-    </div>
-
-    <div class="sec">
-      <p class="lbl">Click map <span class="count" id="mapCount"></span></p>
-      <div class="tabs" id="mapTabs" role="group" aria-label="Preview size">
-        <button type="button" data-m="0" aria-pressed="true">Desktop</button>
-        <button type="button" data-m="1" aria-pressed="false">Mobile</button>
-      </div>
-      <div class="mapbox" id="mapBox"><div class="mapsize" id="mapSize"><div class="mapin" id="mapIn">
-        <iframe id="mapFrame" title="Preview of your site" tabindex="-1"></iframe><canvas id="mapCanvas"></canvas>
-      </div></div></div>
-      <p class="note" id="mapNote">Your real page, with a glow wherever visitors tapped or clicked. Brighter = more clicks. Scroll inside the preview.</p>
-    </div>
-
-    <div class="sec">
-      <p class="lbl">What they click</p>
-      <ul class="bars" id="clicks"></ul>
-    </div>
-
-    <div class="sec">
-      <p class="lbl">Latest visits</p>
-      <ul class="recent" id="recent"></ul>
-    </div>
-
     <p class="toast" id="statsMsg" role="status" aria-live="polite"></p>
+
     <div class="row" style="margin-top:6px">
+      <a class="btn" id="clarityLink" href="https://clarity.microsoft.com/" target="_blank" rel="noopener" style="flex:1 1 220px">Open Clarity (recordings &amp; heatmaps)</a>
       <button class="btn btn-line" id="statsRefresh" type="button">Refresh</button>
-      <span class="tag" id="statsStamp"></span>
     </div>
-    <p class="note">Anonymous: no cookies and no IP addresses are saved. Your own visits aren't counted on browsers where you've signed in here.</p>
+    <p class="note">Clarity only shares the last 1–3 days here, and limits this page to 10 refreshes a day, so numbers are cached for 15 minutes. For session recordings, heatmaps and scroll maps, use the button above.</p>
   </section>
 </div>
 
@@ -322,7 +271,7 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
 
   function openPanel(){
     view('panel'); toast('');
-    try { localStorage.setItem('ag_no_track', '1'); } catch(e){}      /* stops track.js from counting your own visits in this browser */
+    try { localStorage.setItem('ag_no_track', '1'); } catch(e){}      /* keeps clarity.js from recording your own visits on this browser */
     initStats();
     var s = getSession(); $('who').textContent = s && s.email ? s.email : '';
     readStatus().then(function(row){
@@ -385,24 +334,34 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
   });
 
 
-  /* ---------- visitor analytics (reads analytics_report() in Supabase) ---------- */
-  var AKEY = 'ag_analytics_cache_v1';
-  var st = { days: 30, tab: 'pages', data: null, ready: false, timer: 0 };
-  var ORDER = ['hero', 'services', 'skills', 'projects', 'experience', 'process', 'faq', 'contact'];
-  var SVGNS = 'http://www.w3.org/2000/svg';
-  var regions = null; try { regions = new Intl.DisplayNames(['en'], { type: 'region' }); } catch(e){}
+  /* ---------- analytics (Microsoft Clarity via /api/clarity) ---------- */
+  var CKEY = 'ag_clarity_cache_v1', FRESH = 30 * 60 * 1000;
+  var stats = { days: '3', by: '' }, statsReady = false;
 
-  function fmt(n){ return Math.round(Number(n) || 0).toLocaleString(); }
-  function clock(sec){ sec = Math.round(sec || 0); return sec >= 60 ? Math.floor(sec / 60) + 'm ' + (sec % 60) + 's' : sec + 's'; }
-  function dayLabel(s){ var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); }
-  function nice(k, tab){
-    if(tab === 'countries'){ if(k === '??'){ return 'Unknown'; } try { return (regions && regions.of(k)) || k; } catch(e){ return k; } }
-    if(tab === 'devices'){ return k.charAt(0).toUpperCase() + k.slice(1); }
-    return k;
+  function lc(k){ return String(k).toLowerCase().replace(/[^a-z]/g, ''); }
+  function pick(row, names){
+    if(!row){ return undefined; }
+    var keys = Object.keys(row);
+    for(var i = 0; i < names.length; i++){
+      for(var j = 0; j < keys.length; j++){ if(lc(keys[j]) === lc(names[i])){ return row[keys[j]]; } }
+    }
   }
-  function msg(t, kind){ var m = $('statsMsg'); m.textContent = t || ''; m.className = 'toast ' + (kind || ''); }
-  function svg(name, attrs){ var e = document.createElementNS(SVGNS, name); for(var k in attrs){ e.setAttribute(k, attrs[k]); } return e; }
-  function empty(ul, text){ ul.textContent = ''; var li = document.createElement('li'); li.className = 'empty'; li.textContent = text; ul.appendChild(li); }
+  function num(v){ var n = parseFloat(v); return isFinite(n) ? n : 0; }
+  function fmt(n){ return Math.round(n).toLocaleString(); }
+  function metric(data, name){
+    var list = Array.isArray(data) ? data : [];
+    for(var i = 0; i < list.length; i++){ if(lc(list[i].metricName) === lc(name)){ return list[i].information || []; } }
+    return [];
+  }
+  function clock(sec){ sec = Math.round(sec); return sec >= 60 ? Math.floor(sec / 60) + 'm ' + (sec % 60) + 's' : sec + 's'; }
+  function labelOf(row){
+    var keys = Object.keys(row);
+    for(var i = 0; i < keys.length; i++){
+      if(typeof row[keys[i]] === 'string' && !/count|percent|time|depth|users|sessions|visits|views|total/i.test(keys[i]) && isNaN(parseFloat(row[keys[i]]))){ return row[keys[i]]; }
+    }
+    return 'Unknown';
+  }
+  function statsMsg(t, kind){ var m = $('statsMsg'); m.textContent = t || ''; m.className = 'toast ' + (kind || ''); }
 
   function kpi(value, label){
     var d = document.createElement('div'); d.className = 'kpi';
@@ -410,217 +369,100 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
     var s = document.createElement('span'); s.textContent = label;
     d.appendChild(b); d.appendChild(s); return d;
   }
-  function renderKpis(r){
+  function renderKpis(data){
     var box = $('kpis'); box.textContent = '';
-    var t = r.totals || {}, e = r.engage || {};
-    var newPct = t.visitors ? Math.round((r.new_visitors || 0) / t.visitors * 100) : 0;
-    box.appendChild(kpi(fmt(t.visitors), 'Visitors'));
-    box.appendChild(kpi(fmt(t.views), 'Page views'));
-    box.appendChild(kpi(fmt(t.sessions), 'Sessions'));
-    box.appendChild(kpi(clock(e.seconds), 'Avg time'));
-    box.appendChild(kpi((e.scroll || 0) + '%', 'Avg scroll'));
-    box.appendChild(kpi(newPct + '%', 'New visitors'));
-    var on = r.online || 0;
-    $('online').classList.toggle('live', on > 0);
-    $('onlineText').textContent = on > 0 ? on + ' active in the last 5 min' : 'Nobody on the site right now';
+    var t = metric(data, 'Traffic')[0];
+    if(!t){ var e = document.createElement('p'); e.className = 'empty'; e.textContent = 'No visits recorded in this window yet.'; box.appendChild(e); return; }
+    var total = num(pick(t, ['totalSessionCount'])), bots = num(pick(t, ['totalBotSessionCount']));
+    var users = num(pick(t, ['distantUserCount', 'distinctUserCount']));
+    var pps = num(pick(t, ['PagesPerSessionPercentage', 'pagesPerSession']));
+    var scroll = pick(metric(data, 'ScrollDepth')[0], ['averageScrollDepth', 'scrollDepth']);
+    var eng = metric(data, 'EngagementTime')[0];
+    var active = pick(eng, ['activeTime']), tot = pick(eng, ['totalTime']);
+    box.appendChild(kpi(fmt(total), 'Sessions'));
+    box.appendChild(kpi(fmt(users), 'Unique visitors'));
+    if(pps){ box.appendChild(kpi(pps.toFixed(1), 'Pages / session')); }
+    if(scroll !== undefined){ box.appendChild(kpi(num(scroll).toFixed(0) + '%', 'Avg scroll depth')); }
+    if(active !== undefined || tot !== undefined){ box.appendChild(kpi(clock(num(active !== undefined ? active : tot)), 'Time on site')); }
+    if(bots){ box.appendChild(kpi(fmt(bots), 'Bot sessions')); }
+    var rage = metric(data, 'RageClickCount')[0], dead = metric(data, 'DeadClickCount')[0];
+    var r = num(pick(rage, ['sessionsWithMetricPercentage'])), d = num(pick(dead, ['sessionsWithMetricPercentage']));
+    if(r){ box.appendChild(kpi(r.toFixed(1) + '%', 'Sessions w/ rage clicks')); }
+    if(d){ box.appendChild(kpi(d.toFixed(1) + '%', 'Sessions w/ dead clicks')); }
   }
-
-  function renderChart(daily){
-    var s = $('chart'); s.textContent = '';
-    var W = 600, H = 170, top = 14, bottom = 26, left = 4, n = daily.length;
-    if(!n){ return; }
-    var max = 1; daily.forEach(function(d){ if(d.views > max){ max = d.views; } });
-    var step = (W - left * 2) / n, bw = Math.min(36, Math.max(2, step * 0.72)), h = H - top - bottom;
-    s.appendChild(svg('line', { x1: 0, x2: W, y1: H - bottom + .5, y2: H - bottom + .5, stroke: 'rgba(30,26,28,.25)' }));
-    daily.forEach(function(d, i){
-      var x = left + i * step + (step - bw) / 2;
-      var hv = Math.round(d.views / max * h), hu = Math.round(Math.min(d.visitors, d.views) / max * h);
-      var g = svg('g', {});
-      var t = svg('title', {}); t.textContent = dayLabel(d.d) + ' — ' + d.views + ' views, ' + d.visitors + ' visitors'; g.appendChild(t);
-      g.appendChild(svg('rect', { x: x, y: H - bottom - Math.max(hv, d.views ? 2 : 0), width: bw, height: Math.max(hv, d.views ? 2 : 0), rx: 2, fill: 'rgba(155,63,209,.35)' }));
-      if(hu){ g.appendChild(svg('rect', { x: x + bw * 0.25, y: H - bottom - hu, width: bw * 0.5, height: hu, rx: 2, fill: '#E8445F' })); }
-      s.appendChild(g);
-    });
-    var a = svg('text', { x: left, y: H - 7, 'class': 'ax' }); a.textContent = dayLabel(daily[0].d); s.appendChild(a);
-    if(n > 1){ var z = svg('text', { x: W - left, y: H - 7, 'class': 'ax', 'text-anchor': 'end' }); z.textContent = dayLabel(daily[n - 1].d); s.appendChild(z); }
-    var m = svg('text', { x: left, y: 10, 'class': 'ax' }); m.textContent = 'max ' + fmt(max); s.appendChild(m);
-  }
-
-  function bars(ul, items, opts){
-    opts = opts || {};
-    if(!items.length){ empty(ul, opts.none || 'Nothing here yet.'); return; }
-    ul.textContent = '';
-    var max = 0; items.forEach(function(x){ if(x.v > max){ max = x.v; } });
+  function renderBars(rows, valueNames, labelFn){
+    var ul = $('bars'); ul.textContent = '';
+    var items = (rows || []).map(function(r){ return { label: labelFn(r), v: num(pick(r, valueNames)) }; })
+      .filter(function(x){ return x.v > 0; }).sort(function(a, b){ return b.v - a.v; }).slice(0, 8);
+    if(!items.length){ var li = document.createElement('li'); li.textContent = 'Nothing to show yet.'; ul.appendChild(li); return; }
+    var max = items[0].v;
     items.forEach(function(x){
       var li = document.createElement('li');
-      var bar = document.createElement('i'); bar.style.width = (max ? Math.max(3, x.v / max * 100) : 0) + '%';
-      var sp = document.createElement('span'); sp.textContent = x.label;                       /* textContent: paths, referrers and labels come from visitors */
-      var em = document.createElement('em'); em.textContent = x.right;
-      li.appendChild(bar); li.appendChild(sp); li.appendChild(em); ul.appendChild(li);
+      var bar = document.createElement('i'); bar.style.width = Math.max(4, x.v / max * 100) + '%';
+      var s = document.createElement('span'); s.textContent = x.label;              /* textContent: page URLs come from visitors */
+      var e = document.createElement('em'); e.textContent = fmt(x.v);
+      li.appendChild(bar); li.appendChild(s); li.appendChild(e); ul.appendChild(li);
     });
   }
-  function renderTab(){
-    var r = st.data; if(!r){ return; }
-    var rows = r[st.tab] || [], total = 0;
-    rows.forEach(function(x){ total += x.n; });
-    bars($('bars'), rows.map(function(x){ return { label: nice(x.k, st.tab), v: x.n, right: fmt(x.n) + (total ? ' · ' + Math.round(x.n / total * 100) + '%' : '') }; }), { none: 'No visits in this range yet.' });
-  }
-  function renderSections(r){
-    var views = (r.totals && r.totals.views) || 0, got = {};
-    (r.sections || []).forEach(function(x){ got[x.k] = x.n; });
-    var keys = ORDER.filter(function(k){ return got[k] != null; }).concat(Object.keys(got).filter(function(k){ return ORDER.indexOf(k) < 0; }));
-    bars($('sections'), keys.map(function(k){ var p = views ? Math.min(100, Math.round(got[k] / views * 100)) : 0; return { label: k.charAt(0).toUpperCase() + k.slice(1), v: p, right: p + '%' }; }),
-      { none: 'No scroll data yet.' });
-  }
-  function renderRecent(rows){
-    var ul = $('recent'); ul.textContent = '';
-    if(!rows.length){ empty(ul, 'No visits yet — they appear here as soon as someone opens your site.'); return; }
-    rows.forEach(function(x){
-      var li = document.createElement('li');
-      var p = document.createElement('span'); p.className = 'p'; p.textContent = x.p || '/';
-      var w = document.createElement('span'); w.className = 'w';
-      var bits = [nice(x.c || '??', 'countries'), x.d, x.b, x.r].filter(Boolean);
-      w.textContent = bits.join(' · ') + ' · ' + ago(x.t);
-      li.appendChild(p); li.appendChild(w); ul.appendChild(li);
-    });
-  }
-  function render(r){
-    st.data = r;
-    renderKpis(r); renderChart(r.daily || []); renderTab(); renderSections(r);
-    bars($('clicks'), (r.clicks || []).map(function(x){ return { label: x.k, v: x.n, right: fmt(x.n) }; }), { none: 'No clicks recorded yet.' });
-    renderRecent(r.recent || []);
-  }
+  function cleanUrl(u){ return String(u || '/').replace(/^https?:\/\/[^\/]+/i, '').replace(/[?#].*$/, '') || '/'; }
 
-  function rpc(token){
-    return fetch(URL_ + '/rest/v1/rpc/analytics_report', {
-      method: 'POST', cache: 'no-store',
-      headers: { apikey: KEY, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ days: st.days, tz: (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC') })
-    });
-  }
-  function loadStats(){
-    var btn = $('statsRefresh'); btn.disabled = true; msg('');
-    function run(retried){
-      return freshToken().then(rpc).then(function(r){
-        if((r.status === 401) && !retried){
-          var s = getSession(); if(!s){ throw new Error('expired'); }
-          return auth('refresh_token', { refresh_token: s.refresh_token }).then(function(d){ setSession(d); return run(true); });
-        }
-        return r.json().catch(function(){ return {}; }).then(function(j){
-          if(!r.ok){
-            if(r.status === 404 || /PGRST202|could not find the function/i.test(j.message || j.code || '')){ throw new Error('Analytics isn\'t set up yet: run supabase-analytics.sql in Supabase → SQL Editor.'); }
-            if(r.status === 403 || j.code === '42501'){ throw new Error('Not allowed: this account isn\'t the site owner. Check the email in supabase-analytics.sql.'); }
-            throw new Error('Could not load analytics (' + r.status + ').');
-          }
-          return j;
-        });
-      });
-    }
-    return run(false).then(function(j){
-      render(j);
-      try { var c = JSON.parse(localStorage.getItem(AKEY) || '{}'); c[st.days] = { at: Date.now(), data: j }; localStorage.setItem(AKEY, JSON.stringify(c)); } catch(e){}
-      $('statsStamp').textContent = 'Updated just now';
-      loadMap();
-    }).catch(function(err){
-      if(/expired|not signed in|refresh|jwt/i.test(err.message)){ clearSession(); view('login'); $('loginErr').textContent = 'Your session ended — please sign in again.'; }
-      else { msg(err.message, 'bad'); }
-    }).then(function(){ btn.disabled = false; });
-  }
-  function paintCached(){
-    try {
-      var c = JSON.parse(localStorage.getItem(AKEY) || '{}')[st.days];
-      if(c && c.data){ render(c.data); $('statsStamp').textContent = 'Updated ' + ago(new Date(c.at).toISOString()); }
-    } catch(e){}
-  }
-  function pressed(sel, attr, val){
-    Array.prototype.forEach.call(document.querySelectorAll(sel + ' button'), function(b){ b.setAttribute('aria-pressed', b.getAttribute(attr) === String(val) ? 'true' : 'false'); });
-  }
-  function initStats(){
-    paintCached(); loadStats();
-    if(st.ready){ return; } st.ready = true;
-    Array.prototype.forEach.call(document.querySelectorAll('#range button'), function(b){
-      b.addEventListener('click', function(){ st.days = +b.getAttribute('data-d'); pressed('#range', 'data-d', st.days); paintCached(); loadStats(); });
-    });
-    Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function(b){
-      b.addEventListener('click', function(){ st.tab = b.getAttribute('data-k'); pressed('#tabs', 'data-k', st.tab); renderTab(); });
-    });
-    initMap();
-    $('statsRefresh').addEventListener('click', loadStats);
-    st.timer = setInterval(function(){ if(!document.hidden && !$('stats').classList.contains('hidden')){ loadStats(); } }, 60000);
-  }
-
-
-  /* ---------- click map: your real page + where visitors clicked ---------- */
-  var map = { mobile: false, pts: [], n: 0, H: 0, loaded: false };
-  function mapSetNote(t){ $('mapNote').textContent = t; }
-  function mapDraw(){
-    var W = map.mobile ? 390 : 1280, H = map.H || 3000;
-    var box = $('mapBox'), avail = box.clientWidth || 560, s = Math.min(1, avail / W);
-    var fr = $('mapFrame'), cv = $('mapCanvas'), inn = $('mapIn'), size = $('mapSize');
-    fr.style.width = W + 'px'; fr.style.height = H + 'px';
-    cv.width = W; cv.height = H; cv.style.width = W + 'px'; cv.style.height = H + 'px';
-    inn.style.width = W + 'px'; inn.style.height = H + 'px'; inn.style.transform = 'scale(' + s + ')';
-    size.style.width = Math.round(W * s) + 'px'; size.style.height = Math.round(H * s) + 'px';
-    var ctx = cv.getContext('2d'); ctx.clearRect(0, 0, W, H);
-    var r = map.mobile ? 30 : 34;
-    map.pts.forEach(function(p){
-      var x = p[0] / 1000 * W, y = p[1] / 1000 * H;
-      var g = ctx.createRadialGradient(x, y, 0, x, y, r);
-      g.addColorStop(0, 'rgba(232,68,95,.42)'); g.addColorStop(.55, 'rgba(240,97,42,.16)'); g.addColorStop(1, 'rgba(240,97,42,0)');
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
-    });
-    if(map.pts.length && map.pts.length <= 500){
-      map.pts.forEach(function(p){
-        var x = p[0] / 1000 * W, y = p[1] / 1000 * H;
-        ctx.beginPath(); ctx.arc(x, y, 5, 0, 6.2832); ctx.fillStyle = '#1E1A1C'; ctx.fill();
-        ctx.lineWidth = 2; ctx.strokeStyle = '#fff'; ctx.stroke();
-      });
+  function drawBreakdown(data, by){
+    if(!by){
+      renderBars(metric(data, 'PopularPages'), ['visitsCount', 'sessionsCount', 'totalSessionCount'], function(r){ return cleanUrl(pick(r, ['url']) || labelOf(r)); });
+    } else {
+      renderBars(metric(data, 'Traffic'), ['totalSessionCount', 'sessionsCount'], labelOf);
     }
   }
-  function mapMeasure(){
-    try {
-      var d = $('mapFrame').contentDocument;
-      var h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
-      if(h > 300 && Math.abs(h - map.H) > 4){ map.H = h; mapDraw(); }
-    } catch(e){ mapSetNote('Preview blocked: admin.html and index.html must be on the same address.'); }
-  }
-  function mapLoadFrame(){
-    var fr = $('mapFrame'), W = map.mobile ? 390 : 1280;
-    fr.style.width = W + 'px'; fr.style.height = '900px'; map.H = 0;
-    fr.onload = function(){ [200, 1200, 3000].forEach(function(ms){ setTimeout(mapMeasure, ms); }); };
-    fr.src = 'index.html?adminpreview=1&w=' + W;
-    mapDraw();
-  }
-  function loadMap(){
-    freshToken().then(function(token){
-      return fetch(URL_ + '/rest/v1/rpc/analytics_clicks', {
-        method: 'POST', cache: 'no-store',
-        headers: { apikey: KEY, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ days: st.days, tz: (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'), mobile: map.mobile })
-      });
+
+  function loadStats(opts){
+    opts = opts || {};
+    var cfg_ = String(cfg.analyticsUrl || '');
+    if(!cfg_){ statsMsg('Live numbers are off — open Clarity with the button below.'); $('statsBody').classList.add('hidden'); return Promise.resolve(); }
+    var ck = stats.days + '|' + stats.by, cache = {};
+    try { cache = JSON.parse(localStorage.getItem(CKEY) || '{}'); } catch(e){}
+    var hit = cache[ck];
+    if(hit && !opts.force){ renderKpis(hit.data); drawBreakdown(hit.data, stats.by); $('statsSub').textContent = 'Microsoft Clarity · updated ' + ago(new Date(hit.at).toISOString()); if(Date.now() - hit.at < FRESH){ return Promise.resolve(); } }
+    statsMsg('Loading…'); $('statsRefresh').disabled = true;
+    return freshToken().then(function(token){
+      return fetch(cfg_ + '?days=' + stats.days + (stats.by ? '&by=' + stats.by : ''), { headers: { Authorization: 'Bearer ' + token } });
     }).then(function(r){
       return r.json().catch(function(){ return {}; }).then(function(j){
-        if(!r.ok){
-          if(r.status === 404 || /PGRST202|could not find the function/i.test(j.message || j.code || '')){ throw new Error('Click map isn\'t set up yet: run supabase-heatmap.sql in Supabase → SQL Editor.'); }
-          throw new Error('Could not load the click map (' + r.status + ').');
-        }
+        if(!r.ok){ throw new Error(j.hint || j.error || ('Analytics failed (' + r.status + ')')); }
         return j;
       });
     }).then(function(j){
-      map.pts = j.points || []; map.n = j.n || 0;
-      $('mapCount').textContent = fmt(map.n) + ' clicks';
-      mapSetNote(map.n ? 'Your real page, with a glow wherever visitors tapped or clicked. Brighter = more clicks. Scroll inside the preview.' : 'No clicks recorded for this size yet. Clicks show up here as visitors tap around your site.');
-      if(!map.loaded){ map.loaded = true; mapLoadFrame(); } else { mapDraw(); }
-    }).catch(function(err){ mapSetNote(err.message); });
+      $('statsBody').classList.remove('hidden');
+      cache[ck] = { at: Date.now(), data: j.data };
+      try { localStorage.setItem(CKEY, JSON.stringify(cache)); } catch(e){}
+      renderKpis(j.data); drawBreakdown(j.data, stats.by);
+      $('statsSub').textContent = 'Microsoft Clarity · updated just now' + (j.stale ? ' (daily limit reached, showing last data)' : '');
+      statsMsg('');
+    }).catch(function(err){
+      statsMsg(err.message, 'bad');
+    }).then(function(){ $('statsRefresh').disabled = false; });
   }
-  function initMap(){
-    Array.prototype.forEach.call(document.querySelectorAll('#mapTabs button'), function(b){
+
+  function initStats(){
+    var pid = String(cfg.clarityProjectId || '').trim();
+    if(pid){ $('clarityLink').href = 'https://clarity.microsoft.com/projects/view/' + encodeURIComponent(pid) + '/dashboard'; }
+    if(!pid){ statsMsg('Add your Clarity Project ID to config.js to start collecting visits.', 'bad'); }
+    if(statsReady){ return; } statsReady = true;
+    Array.prototype.forEach.call(document.querySelectorAll('#range button'), function(b){
       b.addEventListener('click', function(){
-        map.mobile = b.getAttribute('data-m') === '1'; pressed('#mapTabs', 'data-m', map.mobile ? 1 : 0);
-        map.loaded = false; map.pts = []; loadMap();
+        stats.days = b.getAttribute('data-d');
+        Array.prototype.forEach.call(document.querySelectorAll('#range button'), function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        loadStats();
       });
     });
-    window.addEventListener('resize', function(){ if(map.loaded){ mapDraw(); } });
+    Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function(b){
+      b.addEventListener('click', function(){
+        stats.by = b.getAttribute('data-by');
+        Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        loadStats();
+      });
+    });
+    $('statsRefresh').addEventListener('click', function(){ loadStats({ force: true }); });
+    if(pid){ loadStats(); }
   }
 
   /* ---------- start ---------- */
