@@ -10,7 +10,7 @@ window.SITE_CONFIG = {
   notifyUrl: 'https://austin-garcia-portfolio.vercel.app/api/notify',
 
   // Microsoft Clarity: paste your Project ID (clarity.microsoft.com -> your project -> Settings -> Overview). '' = tracking off
-  clarityProjectId: '',
+  clarityProjectId: 'z5kqm49lly',
 
   // Vercel function that returns your Clarity numbers to admin.html (needs CLARITY_API_TOKEN, see SETUP.md). '' = just show dashboard links
   analyticsUrl: 'https://austin-garcia-portfolio.vercel.app/api/clarity',
