@@ -9,11 +9,8 @@ window.SITE_CONFIG = {
   // Vercel function that DMs you on Discord when someone sends the contact form (leave '' to turn off)
   notifyUrl: 'https://austin-garcia-portfolio.vercel.app/api/notify',
 
-  // Microsoft Clarity: paste your Project ID (clarity.microsoft.com -> your project -> Settings -> Overview). '' = tracking off
-  clarityProjectId: '',
-
-  // Vercel function that returns your Clarity numbers to admin.html (needs CLARITY_API_TOKEN, see SETUP.md). '' = just show dashboard links
-  analyticsUrl: 'https://austin-garcia-portfolio.vercel.app/api/clarity',
+  // Your own visitor analytics: Vercel function that saves visits to Supabase (see SETUP.md). '' = tracking off
+  trackUrl: 'https://austin-garcia-portfolio.vercel.app/api/hit',
 
   // Shown only if the backend can't be reached and nothing is cached
   fallback: { state: 'available', message: '' }
