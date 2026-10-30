@@ -16,7 +16,10 @@ const DIMS = { device: 'Device', country: 'Country/Region', browser: 'Browser', 
 
 module.exports = async (req, res) => {
   const allowed = String(process.env.ALLOWED_ORIGINS || DEFAULT_ORIGINS).split(',').map(s => s.trim()).filter(Boolean);
-  const origin = req.headers.origin || '';
+  /* Browsers don't send an Origin header on same-origin GET requests (admin.html and this function on the same Vercel address),
+     so fall back to the Referer. The Supabase owner check below is the real lock; this is just an extra layer. */
+  let origin = req.headers.origin || '';
+  if (!origin && req.headers.referer) { try { origin = new URL(req.headers.referer).origin; } catch (e) {} }
   const ok = allowed.includes(origin);
   res.setHeader('Access-Control-Allow-Origin', ok ? origin : allowed[0]);
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
