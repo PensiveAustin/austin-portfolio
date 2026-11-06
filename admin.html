@@ -91,6 +91,30 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
 .tabs button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
 .note{font-size:14px;color:var(--muted);margin-top:14px}
 .empty{color:var(--muted);font-size:15px;padding:8px 0}
+/* project tracker */
+.f-in{width:100%;min-height:52px;font:inherit;font-size:17px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:10px;padding:12px 14px}
+.f-in:focus{outline:3px solid #9B3FD1;outline-offset:2px}
+select.f-in{-webkit-appearance:none;appearance:none;padding-right:34px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231E1A1C' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 10px center;background-size:16px}
+input[type=date].f-in{display:block}
+.price-row{display:grid;grid-template-columns:118px 1fr;gap:10px}
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--muted);margin-left:6px}
+.kpi small{display:block;margin-top:6px;font-size:14px;line-height:1.35;color:var(--muted);overflow-wrap:anywhere}
+.plist{list-style:none;margin-top:12px;display:grid;gap:12px}
+.pitem{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:14px 14px 12px}
+.phead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pname{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.2;color:var(--ink);overflow-wrap:anywhere}
+.badge{flex:none;font-family:var(--pixel);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:5px 8px 4px;border-radius:6px;border:2px solid var(--ink);color:var(--ink)}
+.badge.prog{background:#FFE8A3}.badge.done{background:#B7F0C8}
+.pmeta{display:flex;flex-wrap:wrap;gap:2px 16px;margin-top:8px;font-size:15px;color:var(--text)}
+.pmeta .price{font-family:var(--display);font-weight:600;font-size:18px;color:var(--ink)}
+.pnote{margin-top:4px;font-size:14px;color:var(--muted)}
+.pact{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pact button{min-height:42px;font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer}
+.pact button:hover{border-color:var(--ink)}
+.pact .danger{color:#B42318}
+.pact .danger.armed{background:#B42318;color:#fff;border-color:#B42318}
+@media (max-width:480px){.dates{grid-template-columns:1fr}.price-row{grid-template-columns:104px 1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:480px){.card{padding:22px 18px}h1{font-size:29px}.seg button{font-size:18px}}
 </style>
@@ -155,6 +179,46 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
     </div>
   </section>
 
+  <!-- project tracker (private: table "projects") -->
+  <section class="card hidden" id="projects">
+    <div class="stats-head"><h2>Projects</h2></div>
+    <p class="sub" style="margin-bottom:0">Private &mdash; only you can see this. Save a project the day it starts, then add the finish date later.</p>
+    <div class="kpis" id="pKpis"></div>
+
+    <form id="projForm" novalidate autocomplete="off">
+      <p class="lbl" id="pFormTitle">Add a project</p>
+      <div class="field"><label for="pName">Client name</label>
+        <input class="f-in" id="pName" type="text" maxlength="120" placeholder="e.g. Marci Metzger Homes" required></div>
+      <div class="field"><label for="pPrice">Price</label>
+        <div class="price-row">
+          <select class="f-in" id="pCur" aria-label="Currency">
+            <option value="PHP">PHP &#8369;</option><option value="USD">USD $</option><option value="NZD">NZD $</option>
+            <option value="AUD">AUD $</option><option value="CAD">CAD $</option><option value="EUR">EUR &euro;</option>
+            <option value="GBP">GBP &pound;</option><option value="SGD">SGD $</option>
+          </select>
+          <input class="f-in" id="pPrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00">
+        </div></div>
+      <div class="dates">
+        <div class="field"><label for="pStart">Start date</label><input class="f-in" id="pStart" type="date" required></div>
+        <div class="field"><label for="pFinish">Finish date <span class="opt">optional</span></label><input class="f-in" id="pFinish" type="date"></div>
+      </div>
+      <p class="note" style="margin:-6px 0 0">Leave the finish date empty while it's still in progress &mdash; you can add it later from the list below.</p>
+      <div class="row">
+        <button class="btn" id="pSave" type="submit" style="flex:1 1 200px">Save project</button>
+        <button class="btn btn-line" id="pReset" type="button">Clear</button>
+      </div>
+      <p class="toast" id="pMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="lbl" style="margin-top:24px">Your projects</p>
+    <div class="tabs" id="pTabs" role="group" aria-label="Filter projects">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="prog" aria-pressed="false">In progress</button>
+      <button type="button" data-f="done" aria-pressed="false">Completed</button>
+    </div>
+    <ul class="plist" id="pList"></ul>
+  </section>
+
   <!-- analytics (Microsoft Clarity) -->
   <section class="card hidden" id="stats">
     <div class="stats-head">
@@ -206,7 +270,7 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
   var draft = { state: '', message: '' }, saved = { state: '', message: '', updated_at: null };
 
   function show(id, on){ $(id).classList.toggle('hidden', !on); }
-  function view(name){ show('setup', name === 'setup'); show('login', name === 'login'); show('panel', name === 'panel'); show('stats', name === 'panel'); }
+  function view(name){ show('setup', name === 'setup'); show('login', name === 'login'); show('panel', name === 'panel'); show('projects', name === 'panel'); show('stats', name === 'panel'); }
 
   /* ---------- session ---------- */
   function getSession(){ try { return JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch(e){ return null; } }
@@ -273,6 +337,7 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
     view('panel'); toast('');
     try { localStorage.setItem('ag_no_track', '1'); } catch(e){}      /* keeps clarity.js from recording your own visits on this browser */
     initStats();
+    initProjects();
     var s = getSession(); $('who').textContent = s && s.email ? s.email : '';
     readStatus().then(function(row){
       saved = { state: row.state, message: row.message || '', updated_at: row.updated_at };
@@ -330,8 +395,203 @@ input:focus{outline:3px solid #9B3FD1;outline-offset:2px}
   $('outBtn').addEventListener('click', function(){
     var s = getSession();
     if(s){ fetch(URL_ + '/auth/v1/logout', { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + s.access_token } }).catch(function(){}); }
-    clearSession(); $('who').textContent = ''; view('login');
+    projReset(); clearSession(); $('who').textContent = ''; view('login');
   });
+
+
+  /* ---------- project tracker (table "projects": only you can read or change it) ---------- */
+  var P = { rows: [], filter: 'all', editing: null, armed: null, armTimer: 0 };
+  var DKEY = 'ag_proj_draft_v1';
+
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function todayStr(){ var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function utc(s){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : null; }
+  function fmtD(s){ var t = utc(s); return t === null ? '' : new Date(t).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
+  function dayCount(a, b){ var x = utc(a), y = utc(b); return (x === null || y === null) ? null : Math.round((y - x) / 86400000); }
+  function plural(n, w){ return n + ' ' + w + (n === 1 ? '' : 's'); }
+  function money(n, cur){
+    if(n === null || n === undefined || n === ''){ return '\u2014'; }
+    var v = Number(n);
+    try { return new Intl.NumberFormat('en-PH', { style: 'currency', currency: cur || 'PHP', minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(v); }
+    catch(e){ return (cur || '') + ' ' + v; }
+  }
+  function sums(list){
+    var by = {};
+    list.forEach(function(r){ if(r.price !== null && r.price !== undefined){ by[r.currency] = (by[r.currency] || 0) + Number(r.price); } });
+    var parts = Object.keys(by).map(function(c){ return money(by[c], c); });
+    return parts.length ? parts.join(' + ') : '\u2014';
+  }
+  function pMsg(text, kind){ var t = $('pMsg'); t.textContent = text || ''; t.className = 'toast ' + (kind || ''); }
+  function el(tag, cls, text){ var e = document.createElement(tag); if(cls){ e.className = cls; } if(text !== undefined){ e.textContent = text; } return e; }
+
+  /* talks to Supabase as you; refreshes an old login once before giving up */
+  function api(method, path, body, prefer, retried){
+    return freshToken().then(function(token){
+      var h = { apikey: KEY, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' };
+      if(prefer){ h.Prefer = prefer; }
+      return fetch(URL_ + '/rest/v1/' + path, { method: method, headers: h, body: body ? JSON.stringify(body) : undefined, cache: 'no-store' });
+    }).then(function(r){
+      if((r.status === 401 || r.status === 403) && !retried){
+        var s = getSession(); if(!s){ throw new Error('expired'); }
+        return auth('refresh_token', { refresh_token: s.refresh_token }).then(function(d){ setSession(d); return api(method, path, body, prefer, true); });
+      }
+      if(!r.ok){
+        return r.text().then(function(t){
+          var msg = ''; try { msg = JSON.parse(t).message || ''; } catch(e){}
+          if(r.status === 404 || /schema cache|does not exist|could not find the table/i.test(msg)){ throw new Error('The projects table is missing. Run supabase-projects.sql in Supabase \u2192 SQL Editor first.'); }
+          if(/finish_not_before_start|check constraint/i.test(msg)){ throw new Error("The finish date can't be before the start date."); }
+          throw new Error(msg || ('Request failed (' + r.status + ').'));
+        });
+      }
+      return r.status === 204 ? null : r.json();
+    });
+  }
+  function pFail(err){
+    if(/expired|not signed in|refresh|jwt/i.test(err.message)){ projReset(); clearSession(); view('login'); $('loginErr').textContent = 'Your session ended \u2014 please sign in again.'; }
+    else { pMsg(err.message, 'bad'); }
+  }
+
+  /* ----- unsaved-draft safety net (stays on this browser only; wiped on sign out) ----- */
+  function saveDraft(){
+    if(P.editing){ return; }
+    var d = { n: $('pName').value, p: $('pPrice').value, c: $('pCur').value, s: $('pStart').value, f: $('pFinish').value };
+    try { if(d.n || d.p || d.f){ localStorage.setItem(DKEY, JSON.stringify(d)); } else { localStorage.removeItem(DKEY); } } catch(e){}
+  }
+  function clearDraft(){ try { localStorage.removeItem(DKEY); } catch(e){} }
+
+  function setForm(r){
+    $('pName').value = r ? r.client_name : '';
+    $('pPrice').value = (r && r.price !== null && r.price !== undefined) ? r.price : '';
+    $('pCur').value = r ? r.currency : 'PHP';
+    $('pStart').value = r ? r.start_date : todayStr();
+    $('pFinish').value = r && r.finish_date ? r.finish_date : '';
+    P.editing = r ? r.id : null;
+    $('pFormTitle').textContent = r ? 'Edit project' : 'Add a project';
+    $('pSave').textContent = r ? 'Save changes' : 'Save project';
+    $('pReset').textContent = r ? 'Cancel edit' : 'Clear';
+  }
+
+  function pRenderKpis(){
+    var prog = P.rows.filter(function(r){ return !r.finish_date; }), done = P.rows.filter(function(r){ return r.finish_date; });
+    var box = $('pKpis'); box.textContent = '';
+    [['In progress', prog, 'Worth '], ['Completed', done, 'Earned ']].forEach(function(k){
+      var d = el('div', 'kpi'); d.appendChild(el('b', '', String(k[1].length))); d.appendChild(el('span', '', k[0]));
+      d.appendChild(el('small', '', k[2] + sums(k[1]))); box.appendChild(d);
+    });
+  }
+
+  function renderList(){
+    var ul = $('pList'); ul.textContent = '';
+    var rows = P.rows.filter(function(r){ return P.filter === 'all' || (P.filter === 'prog' ? !r.finish_date : !!r.finish_date); });
+    if(!rows.length){
+      ul.appendChild(el('li', 'empty', P.rows.length ? 'Nothing in this filter.' : 'No projects yet \u2014 add your first one above.'));
+      return;
+    }
+    rows.forEach(function(r){
+      var li = el('li', 'pitem'), head = el('div', 'phead'), fin = !!r.finish_date;
+      head.appendChild(el('strong', 'pname', r.client_name));
+      head.appendChild(el('span', 'badge ' + (fin ? 'done' : 'prog'), fin ? 'Completed' : 'In progress'));
+      li.appendChild(head);
+      var meta = el('div', 'pmeta');
+      meta.appendChild(el('span', 'price', money(r.price, r.currency)));
+      meta.appendChild(el('span', '', 'Started ' + fmtD(r.start_date)));
+      if(fin){ meta.appendChild(el('span', '', 'Finished ' + fmtD(r.finish_date))); }
+      li.appendChild(meta);
+      var n = fin ? dayCount(r.start_date, r.finish_date) : dayCount(r.start_date, todayStr());
+      if(n !== null){ li.appendChild(el('div', 'pnote', fin ? 'Took ' + plural(Math.max(n, 0) + 1, 'day') : (n < 0 ? 'Starts in ' + plural(-n, 'day') : 'Running for ' + plural(n + 1, 'day')))); }
+      var act = el('div', 'pact');
+      var edit = el('button', '', 'Edit'); edit.type = 'button'; edit.addEventListener('click', function(){ startEdit(r.id); }); act.appendChild(edit);
+      if(!fin){ var mf = el('button', '', 'Mark finished'); mf.type = 'button'; mf.addEventListener('click', function(){ markFinished(r.id); }); act.appendChild(mf); }
+      var del = el('button', 'danger' + (P.armed === r.id ? ' armed' : ''), P.armed === r.id ? 'Tap again to delete' : 'Delete');
+      del.type = 'button'; del.addEventListener('click', function(){ removeProject(r.id); }); act.appendChild(del);
+      li.appendChild(act); ul.appendChild(li);
+    });
+  }
+  function renderProjects(){ pRenderKpis(); renderList(); }
+
+  function loadProjects(){
+    return api('GET', 'projects?select=*&order=start_date.desc,created_at.desc')
+      .then(function(rows){ P.rows = rows || []; renderProjects(); })
+      .catch(pFail);
+  }
+  function byId(id){ for(var i = 0; i < P.rows.length; i++){ if(P.rows[i].id === id){ return P.rows[i]; } } return null; }
+  function enc(id){ return encodeURIComponent(id); }
+
+  function startEdit(id){
+    var r = byId(id); if(!r){ return; }
+    setForm(r); pMsg('Editing \u201c' + r.client_name + '\u201d \u2014 change anything, then Save changes.', '');
+    $('projForm').scrollIntoView({ behavior: 'smooth', block: 'start' }); $('pName').focus();
+  }
+  function markFinished(id){
+    var r = byId(id); if(!r){ return; }
+    var t = todayStr(), f = utc(t) < utc(r.start_date) ? r.start_date : t;
+    pMsg('Saving\u2026', '');
+    api('PATCH', 'projects?id=eq.' + enc(id), { finish_date: f }, 'return=representation')
+      .then(function(rows){ if(!rows || !rows[0]){ throw new Error("Not allowed: this account isn't the site owner."); } return loadProjects(); })
+      .then(function(){ pMsg('Marked \u201c' + r.client_name + '\u201d as finished.', 'ok'); })
+      .catch(pFail);
+  }
+  function removeProject(id){
+    var r = byId(id); if(!r){ return; }
+    if(P.armed !== id){ P.armed = id; clearTimeout(P.armTimer); P.armTimer = setTimeout(function(){ P.armed = null; renderList(); }, 4000); renderList(); return; }
+    clearTimeout(P.armTimer); P.armed = null;
+    api('DELETE', 'projects?id=eq.' + enc(id), null, 'return=representation')
+      .then(function(rows){
+        if(!rows || !rows[0]){ throw new Error("Not allowed: this account isn't the site owner."); }
+        if(P.editing === id){ setForm(null); clearDraft(); }
+        return loadProjects();
+      })
+      .then(function(){ pMsg('Deleted \u201c' + r.client_name + '\u201d.', 'ok'); })
+      .catch(pFail);
+  }
+
+  function submitProject(e){
+    e.preventDefault();
+    var name = $('pName').value.trim(), start = $('pStart').value, fin = $('pFinish').value, raw = $('pPrice').value.trim();
+    var price = raw === '' ? null : Number(raw);
+    if(!name){ pMsg('Enter the client name.', 'bad'); $('pName').focus(); return; }
+    if(!start){ pMsg('Pick the start date.', 'bad'); $('pStart').focus(); return; }
+    if(price !== null && (!isFinite(price) || price < 0)){ pMsg('Price must be a number, 0 or more.', 'bad'); $('pPrice').focus(); return; }
+    if(fin && fin < start){ pMsg("The finish date can't be before the start date.", 'bad'); $('pFinish').focus(); return; }
+    var body = { client_name: name, price: price, currency: $('pCur').value, start_date: start, finish_date: fin || null };
+    var btn = $('pSave'), editing = P.editing; btn.disabled = true; btn.textContent = 'Saving\u2026'; pMsg('');
+    (editing ? api('PATCH', 'projects?id=eq.' + enc(editing), body, 'return=representation') : api('POST', 'projects', body, 'return=representation'))
+      .then(function(rows){
+        if(!rows || !rows[0]){ throw new Error("Not allowed: this account isn't the site owner. Check the email in supabase-projects.sql."); }
+        setForm(null); clearDraft();
+        return loadProjects().then(function(){ pMsg('Saved \u2014 \u201c' + name + '\u201d ' + (editing ? 'updated.' : 'added' + (fin ? '.' : ' (in progress).')), 'ok'); });
+      })
+      .catch(pFail)
+      .then(function(){ btn.disabled = false; btn.textContent = P.editing ? 'Save changes' : 'Save project'; });
+  }
+
+  function projReset(){
+    P.rows = []; P.editing = null; P.armed = null; clearTimeout(P.armTimer); clearDraft();
+    $('pList').textContent = ''; $('pKpis').textContent = ''; pMsg('');
+    setForm(null);
+  }
+  var pInit = false;
+  function initProjects(){
+    if(!pInit){
+      pInit = true;
+      $('projForm').addEventListener('submit', submitProject);
+      $('projForm').addEventListener('input', saveDraft);
+      $('pReset').addEventListener('click', function(){ setForm(null); clearDraft(); pMsg(''); });
+      Array.prototype.forEach.call($('pTabs').querySelectorAll('button'), function(b){
+        b.addEventListener('click', function(){
+          P.filter = b.getAttribute('data-f');
+          Array.prototype.forEach.call($('pTabs').querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+          renderList();
+        });
+      });
+    }
+    setForm(null);
+    try {                                                              /* bring back a half-filled form from earlier */
+      var d = JSON.parse(localStorage.getItem(DKEY) || 'null');
+      if(d && (d.n || d.p || d.f)){ $('pName').value = d.n || ''; $('pPrice').value = d.p || ''; $('pCur').value = d.c || 'PHP'; $('pStart').value = d.s || todayStr(); $('pFinish').value = d.f || ''; pMsg('Restored your unsaved draft.', ''); }
+    } catch(e){}
+    loadProjects();
+  }
 
 
   /* ---------- analytics (Microsoft Clarity via /api/clarity) ---------- */
