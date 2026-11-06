@@ -114,6 +114,12 @@ input[type=date].f-in{display:block}
 .pact button:hover{border-color:var(--ink)}
 .pact .danger{color:#B42318}
 .pact .danger.armed{background:#B42318;color:#fff;border-color:#B42318}
+/* main tabs */
+.mtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.mtabs button{min-height:52px;font-family:var(--display);font-weight:600;font-size:18px;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:12px;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
+.mtabs button:hover{background:var(--card)}
+.mtabs button[aria-selected=true]{background:var(--ink);color:#fff;box-shadow:4px 4px 0 #9B3FD1;transform:translate(-2px,-2px)}
+@media (max-width:480px){.mtabs{gap:8px}.mtabs button{font-size:16px;min-height:48px}}
 @media (max-width:480px){.dates{grid-template-columns:1fr}.price-row{grid-template-columns:104px 1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:480px){.card{padding:22px 18px}h1{font-size:29px}.seg button{font-size:18px}}
@@ -125,6 +131,13 @@ input[type=date].f-in{display:block}
     <a class="brand" href="index.html"><img src="logo.png" alt="">Admin</a>
     <span class="tag" id="who"></span>
   </div>
+
+  <!-- main tabs (visible only when signed in) -->
+  <nav class="mtabs hidden" id="mainTabs" role="tablist" aria-label="Admin sections">
+    <button type="button" role="tab" data-tab="panel" aria-selected="true">Status</button>
+    <button type="button" role="tab" data-tab="projects" aria-selected="false">Projects</button>
+    <button type="button" role="tab" data-tab="stats" aria-selected="false">Analytics</button>
+  </nav>
 
   <!-- shown until config.js is filled in -->
   <section class="card setup hidden" id="setup">
@@ -270,7 +283,25 @@ input[type=date].f-in{display:block}
   var draft = { state: '', message: '' }, saved = { state: '', message: '', updated_at: null };
 
   function show(id, on){ $(id).classList.toggle('hidden', !on); }
-  function view(name){ show('setup', name === 'setup'); show('login', name === 'login'); show('panel', name === 'panel'); show('projects', name === 'panel'); show('stats', name === 'panel'); }
+  var TABKEY = 'ag_admin_tab_v1', activeTab = 'panel';
+  try { var t0 = sessionStorage.getItem(TABKEY); if(t0 === 'projects' || t0 === 'stats'){ activeTab = t0; } } catch(e){}
+  function view(name){
+    var inPanel = name === 'panel';
+    show('setup', name === 'setup'); show('login', name === 'login');
+    show('mainTabs', inPanel);
+    show('panel', inPanel && activeTab === 'panel');
+    show('projects', inPanel && activeTab === 'projects');
+    show('stats', inPanel && activeTab === 'stats');
+    Array.prototype.forEach.call(document.querySelectorAll('#mainTabs button'), function(b){ b.setAttribute('aria-selected', b.getAttribute('data-tab') === activeTab ? 'true' : 'false'); });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('#mainTabs button'), function(b){
+    b.addEventListener('click', function(){
+      activeTab = b.getAttribute('data-tab');
+      try { sessionStorage.setItem(TABKEY, activeTab); } catch(e){}
+      view('panel');
+      window.scrollTo(0, 0);
+    });
+  });
 
   /* ---------- session ---------- */
   function getSession(){ try { return JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch(e){ return null; } }
