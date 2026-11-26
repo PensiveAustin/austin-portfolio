@@ -339,6 +339,22 @@ form{display:grid;gap:18px}
 .field input:focus,.field textarea:focus{outline:2px solid var(--yellow);outline-offset:2px;border-color:transparent}
 .status{min-height:1.5em;font-size:16px}
 .status.ok{color:#7BE0A8}.status.err{color:#FF9A9A}
+.methods{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;margin:0}
+.methods legend{display:block;font-family:var(--pixel);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#CFE4F8;margin-bottom:10px;padding:0}
+.methods label{position:relative;margin:0}
+.methods input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.methods span{display:inline-flex;align-items:center;min-height:44px;padding:9px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);font-family:var(--pixel);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#EAF5FF;transition:background .15s,color .15s,border-color .15s}
+.methods input:checked+span{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.methods input:focus-visible+span{outline:2px solid var(--yellow);outline-offset:2px}
+.thanks{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(14,30,55,.6);backdrop-filter:blur(4px)}
+.thanks.open{display:flex}
+.thanks-box{width:min(440px,100%);background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:20px;box-shadow:8px 8px 0 var(--ink);padding:34px 28px 28px;text-align:center;animation:thanksIn .35s cubic-bezier(.2,.8,.2,1)}
+.thanks-box .tick{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:#7BE0A8;display:grid;place-items:center}
+.thanks-box .tick svg{width:32px;height:32px}
+.thanks-box h3{font-size:28px;margin-bottom:10px}
+.thanks-box p{color:var(--muted);font-size:17px;margin-bottom:24px}
+@keyframes thanksIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.thanks-box{animation:none}}
 .conf{position:fixed;left:0;top:0;width:11px;height:11px;border-radius:3px;z-index:300;pointer-events:none}
 
 /* footer */
@@ -839,7 +855,19 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
         <input type="hidden" name="from_name" value="Austin Garcia Portfolio">
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <div class="field"><label for="fname">Full name</label><input id="fname" name="name" type="text" placeholder="Your full name" autocomplete="name" autocapitalize="words" required></div>
-        <div class="field"><label for="femail">Email address</label><input id="femail" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@company.com" required></div>
+        <fieldset class="methods">
+          <legend>Best way to reach you</legend>
+          <label><input type="radio" name="contact_method" value="Facebook" data-label="Facebook profile link or name" data-ph="facebook.com/yourname" checked><span>Facebook</span></label>
+          <label><input type="radio" name="contact_method" value="Messenger" data-label="Your Messenger name or link" data-ph="m.me/yourname"><span>Messenger</span></label>
+          <label><input type="radio" name="contact_method" value="WhatsApp" data-label="WhatsApp number (with country code)" data-ph="+63 912 345 6789"><span>WhatsApp</span></label>
+          <label><input type="radio" name="contact_method" value="Viber" data-label="Viber number" data-ph="+63 912 345 6789"><span>Viber</span></label>
+          <label><input type="radio" name="contact_method" value="Telegram" data-label="Telegram @username" data-ph="@yourname"><span>Telegram</span></label>
+          <label><input type="radio" name="contact_method" value="Instagram" data-label="Instagram @username" data-ph="@yourname"><span>Instagram</span></label>
+          <label><input type="radio" name="contact_method" value="Email" data-label="Email address" data-ph="you@company.com"><span>Email</span></label>
+          <label><input type="radio" name="contact_method" value="Phone / SMS" data-label="Mobile number" data-ph="0912 345 6789"><span>Phone / SMS</span></label>
+          <label><input type="radio" name="contact_method" value="Other" data-label="How to reach you" data-ph="Link, username or number"><span>Other</span></label>
+        </fieldset>
+        <div class="field"><label for="fcontact" id="fcontactLabel">Facebook profile link or name</label><input id="fcontact" name="contact" type="text" autocapitalize="off" spellcheck="false" placeholder="facebook.com/yourname" required></div>
         <div class="field"><label for="fdetails">Project details</label><textarea id="fdetails" name="message" rows="4" placeholder="Tell me about your project..." required></textarea></div>
         <button type="submit" class="btn btn-grad" id="submitBtn"><span id="submitLabel">Send inquiry</span>
           <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -851,6 +879,15 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 </section>
 
 </main>
+
+<div class="thanks" id="thanks" role="dialog" aria-modal="true" aria-labelledby="thanksTitle" aria-hidden="true">
+  <div class="thanks-box">
+    <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#0E1E37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h3 id="thanksTitle">Message sent!</h3>
+    <p id="thanksMsg">Austin will get back to you shortly.</p>
+    <button type="button" class="btn btn-grad" id="thanksClose">Got it</button>
+  </div>
+</div>
 
 <footer>
   <div class="wrap foot">
@@ -880,7 +917,7 @@ function notifyOwner(fd){
   if(!/^https:\/\//.test(u)){ return; }
   try {
     fetch(u, { method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true,
-      body: JSON.stringify({ name: fd.get('name'), email: fd.get('email'), message: fd.get('message'), botcheck: fd.get('botcheck') || '' }) }).catch(function(){});
+      body: JSON.stringify({ name: fd.get('name'), contact_method: fd.get('contact_method'), contact: fd.get('contact'), message: fd.get('message'), botcheck: fd.get('botcheck') || '' }) }).catch(function(){});
   } catch(e) {}
 }
 </script>
@@ -894,6 +931,30 @@ function notifyOwner(fd){
 
   /* contact form (Web3Forms, no redirect) */
   var form = document.getElementById('inquiryForm');
+  /* contact method chips: relabel the input to match */
+  var cLabel = document.getElementById('fcontactLabel'), cInput = document.getElementById('fcontact');
+  function syncMethod(){
+    var r = form.querySelector('input[name="contact_method"]:checked'); if(!r){ return; }
+    cLabel.textContent = r.getAttribute('data-label');
+    cInput.placeholder = r.getAttribute('data-ph');
+    cInput.type = (r.value === 'Email') ? 'email' : 'text';
+    cInput.inputMode = (r.value === 'Email') ? 'email' : ((/WhatsApp|Viber|Phone/.test(r.value)) ? 'tel' : 'text');
+  }
+  Array.prototype.forEach.call(form.querySelectorAll('input[name="contact_method"]'), function(r){ r.addEventListener('change', syncMethod); });
+
+  /* thank-you popup */
+  var thanks = document.getElementById('thanks'), thanksClose = document.getElementById('thanksClose');
+  function hideThanks(){ thanks.classList.remove('open'); thanks.setAttribute('aria-hidden','true'); }
+  function showThanks(name, via){
+    document.getElementById('thanksTitle').textContent = name ? ('Thanks, ' + name + '!') : 'Message sent!';
+    document.getElementById('thanksMsg').textContent = 'Austin will get back to you shortly' + (via ? ' via ' + via : '') + '.';
+    thanks.classList.add('open'); thanks.setAttribute('aria-hidden','false');
+    thanksClose.focus();
+  }
+  thanksClose.addEventListener('click', hideThanks);
+  thanks.addEventListener('click', function(e){ if(e.target === thanks){ hideThanks(); } });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && thanks.classList.contains('open')){ hideThanks(); } });
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var btn = document.getElementById('submitBtn');
@@ -904,6 +965,9 @@ function notifyOwner(fd){
     status.textContent = '';
     status.className = 'status';
     var fd = new FormData(form);
+    var firstName = String(fd.get('name')||'').trim().split(/\s+/)[0];
+    var viaMethod = fd.get('contact_method') || '';
+    fd.set('subject', 'New Inquiry from ' + fd.get('name') + ' (' + viaMethod + ': ' + fd.get('contact') + ')');
     fetch('https://api.web3forms.com/submit', {
       method:'POST', headers:{'Accept':'application/json'}, body:fd
     })
@@ -913,15 +977,16 @@ function notifyOwner(fd){
       label.textContent = 'Send inquiry';
       btn.removeAttribute('disabled');
       notifyOwner(fd);
-      status.textContent = "Message sent — I'll get back to you soon.";
-      status.className = 'status ok';
+      status.textContent = '';
       form.reset();
+      syncMethod();
+      showThanks(firstName, viaMethod);
       if(canAnimate){ burst(btn); }
     })
     .catch(function(){
       label.textContent = 'Send inquiry';
       btn.removeAttribute('disabled');
-      status.textContent = 'Something went wrong — please try again or email directly.';
+      status.textContent = 'Something went wrong — please try again in a moment.';
       status.className = 'status err';
     });
   });
