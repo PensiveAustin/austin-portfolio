@@ -51,7 +51,7 @@ light — it never shows a wrong status or breaks the page.
 - `supabase-setup.sql` — run once in Supabase
 
 ## Discord DM alerts (optional)
-`api/notify.js` is a Vercel function. When a visitor sends the contact form, your Discord bot DMs you the name, email and message.
+`api/notify.js` is a Vercel function. When a visitor sends the contact form, your Discord bot DMs you the name, how they want to be reached (Facebook, Messenger, WhatsApp, email...), their contact and the message.
 Set `DISCORD_BOT_TOKEN` and `DISCORD_USER_ID` under Vercel > Project > Settings > Environment Variables, then **redeploy**.
 `notifyUrl` in `config.js` points the form at it (blank = off).
 
@@ -68,3 +68,8 @@ Clarity records clicks, scrolls and session replays on the **public** site (`ind
 
 Your own visits are skipped automatically once you've signed in to admin.html in a browser (`ag_no_track` flag), and Do Not Track visitors are skipped too.
 Files: `clarity.js` (loads the tracker), `api/clarity.js` (secure proxy for the numbers).
+
+## If Discord DMs stop arriving
+- The site lives on GitHub Pages, but `api/notify.js` only runs on **Vercel**. Pushing to GitHub does not update Vercel unless the Vercel project is connected to this same repo and branch. Check Vercel > Deployments shows a recent "Ready" deploy.
+- Vercel > Logs > filter `/api/notify`: `403` = the site address is not in `ALLOWED_ORIGINS`; `open DM failed 401` = wrong `DISCORD_BOT_TOKEN`; `open DM failed 400` = wrong `DISCORD_USER_ID`; `send failed 403` = you must share a server with the bot / allow DMs from server members.
+- The form still works if only one of email (Web3Forms) or Discord gets through; the visitor only sees an error if both fail.
