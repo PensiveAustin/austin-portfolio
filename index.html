@@ -912,7 +912,7 @@ html:not(.anim) .btn:hover{transform:translateY(-2px)}
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script>
 /* Optional: ping Austin on Messenger/Discord via a Cloudflare Worker (set notifyUrl in config.js; blank = off) */
-function notifyOwner(fd){
+function notifyOwner(fd, mail){
   var u = (window.SITE_CONFIG && window.SITE_CONFIG.notifyUrl) || '';
   if(!/^https:\/\//.test(u)){ return Promise.resolve(false); }
   var method = String(fd.get('contact_method') || ''), contact = String(fd.get('contact') || '');
@@ -920,6 +920,7 @@ function notifyOwner(fd){
     name: fd.get('name'), contact_method: method, contact: contact, message: fd.get('message'),
     /* legacy field: an older deployed notify function still requires "email", so it gets "Facebook: link" there */
     email: (method + ': ' + contact).slice(0, 118),
+    mail_status: mail ? (mail.ok ? 'sent' : 'FAILED: ' + (mail.msg || 'unknown')) : '',
     botcheck: fd.get('botcheck') || ''
   });
   try {
@@ -975,14 +976,21 @@ function notifyOwner(fd){
     var firstName = String(fd.get('name')||'').trim().split(/\s+/)[0];
     var viaMethod = fd.get('contact_method') || '';
     fd.set('subject', 'New Inquiry from ' + fd.get('name') + ' (' + viaMethod + ': ' + fd.get('contact') + ')');
-    var viaEmail = fetch('https://api.web3forms.com/submit', {
+    /* Web3Forms uses "email" as the reply-to; visitors no longer give one, so use a valid address (theirs if they chose Email, otherwise yours) */
+    var given = String(fd.get('contact') || '').trim();
+    fd.set('email', (viaMethod === 'Email' && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(given)) ? given : 'work.austingarcia@gmail.com');
+    fd.set('contact_info', viaMethod + ': ' + given);
+    fetch('https://api.web3forms.com/submit', {
       method:'POST', headers:{'Accept':'application/json'}, body:fd
     })
     .then(function(r){ return r.json(); })
-    .then(function(d){ return !!d.success; })
-    .catch(function(){ return false; });
-    var viaDiscord = notifyOwner(fd);
-    Promise.all([viaEmail, viaDiscord]).then(function(res){
+    .then(function(d){ return { ok: !!d.success, msg: d.message || '' }; })
+    .catch(function(){ return { ok: false, msg: 'network error' }; })
+    .then(function(mail){
+      /* Discord also reports whether the email copy worked, so a failure is never silent */
+      return notifyOwner(fd, mail).then(function(discordOk){ return [mail.ok, discordOk]; });
+    })
+    .then(function(res){
       label.textContent = 'Send inquiry';
       btn.removeAttribute('disabled');
       if(!res[0] && !res[1]){
